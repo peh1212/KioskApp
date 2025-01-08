@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/listTable"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp">
+
+    <LinearLayout
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewMenuName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="에스프레소"
+            android:textColor="#666666"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/textViewOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="에스프레소"
+            android:textColor="#AAAAAA"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonMinus"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minWidth="0dip"
+        android:minHeight="0dip"
+        android:paddingLeft="9dp"
+        android:paddingTop="6dp"
+        android:paddingRight="9dp"
+        android:paddingBottom="6dp"
+        android:text="-"
+        android:layout_gravity="center"
+        android:textColor="#EEEEEE"
+        android:textSize="14dp"
+        app:backgroundTint="#80C1F6" />
+
+    <TextView
+        android:id="@+id/textViewQuantity"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="1"
+        android:layout_gravity="center"
+        android:textColor="#666666"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/buttonPlus"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minWidth="0dip"
+        android:minHeight="0dip"
+        android:paddingLeft="9dp"
+        android:paddingTop="6dp"
+        android:paddingRight="9dp"
+        android:paddingBottom="6dp"
+        android:text="+"
+        android:layout_gravity="center"
+        android:textColor="#EEEEEE"
+        android:textSize="14dp"
+        app:backgroundTint="#80C1F6" />
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="7,600원"
+        android:textColor="#666666"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/buttonX"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minWidth="0dip"
+        android:minHeight="0dip"
+        android:paddingLeft="6dp"
+        android:paddingTop="6dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="6dp"
+        android:text="X"
+        android:layout_gravity="center"
+        android:textColor="#EEEEEE"
+        android:textSize="14dp"
+        app:backgroundTint="#80C1F6" />
+
+
+</TableRow>

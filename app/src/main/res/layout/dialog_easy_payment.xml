@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="30dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_close"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:contentDescription="닫기" />
+
+    <TextView
+        android:id="@+id/tv_instruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:text="결제하실 카드를\n 투입구에 넣어주세요."
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="네이버페이, 카카오페이, 제로페이, SSG페이, \n L페이, 앱카드 결제가 가능합니다."
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/iv_card_image"
+        android:layout_width="212dp"
+        android:layout_height="255dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/easy_card" />
+
+    <TextView
+        android:id="@+id/tv_payment_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/purple"
+        android:textStyle="bold"
+        android:text="26,000원" />
+
+</LinearLayout>

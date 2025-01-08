@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="50dp">
+
+
+    <TextView
+        android:id="@+id/point_number_rec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="010-1111-1111" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="위 번호로 포인트가 적립됩습니다."
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:background="@drawable/button_03"
+        android:text="휴대폰 번호를 입력하시면 서비스 이용 약관 및 \n 개인 정보 수집 및 이용, 제 3자 개인정보 제공에\n 동의하는 것으로 간주됩니다."
+        android:autoLink="all"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="이벤트, 쿠폰 등 혜택 안내를 받으실 수 있어요."
+        android:textColor="@color/purple"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="48sp"
+        android:layout_gravity="center"
+        android:text="[선택] 마케팅 정보 수신 동의"
+        android:textColor="@color/grey"/>
+
+    <Button
+        android:id="@+id/point_terms"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_01"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:text=" 확 인 " />
+</LinearLayout>

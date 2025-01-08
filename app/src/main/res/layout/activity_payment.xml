@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_gravity="center"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주문 내역 확인"
+        android:layout_marginTop="20dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
+    <ListView
+        android:id="@+id/lyj_recyclerViewItemResult"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="20dp"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F8F8F8"
+        android:padding="16dp"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_02"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:padding="20dp"
+                android:text="결제금액"
+                android:gravity="left"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/payment_totalQuantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="20dp"
+                android:text="4개"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:id="@+id/payment_totalPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:padding="20dp"
+                android:text="17,700원"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="#000000"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/paymentPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="주문 금액: 82,700원"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="14sp"
+                    android:textColor="#666666"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="포인트 사용: -1,500원"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="14sp"
+                    android:textColor="#666666"/>
+            </LinearLayout>
+        <Button
+            android:id="@+id/point_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/button_02"
+            android:layout_gravity="center"
+            android:text="포인트 적립"
+            android:textColor="@color/purple" />
+        </LinearLayout>
+
+
+        <!-- 결제 버튼 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/cardPaymentButton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_01"
+                android:drawableRight="@drawable/credit_card"
+                android:padding="16dp"
+                android:text="카드 결제 "
+                android:textColor="#FFFFFF" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/simplePaymentButton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_01"
+                android:drawableRight="@drawable/barcode_reader"
+                android:padding="16dp"
+                android:text="간편 결제"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/payment_Name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="left"
+            android:text="아메리카노"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/payment_Quantity"
+            android:layout_width="26dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1개"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/payment_Price"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="8,000원"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/payment_OptionName1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="left"
+            android:text="ㄴ ICE"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/payment_OptionPrice1"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="+ 500원"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/payment_OptionName2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="left"
+            android:text="ㄴ ICE"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/payment_OptionPrice2"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="+ 500원"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/payment_OptionName3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="left"
+            android:text="ㄴ ICE"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/payment_OptionPrice3"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="+ 500원"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/payment_OptionName4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="left"
+            android:text="ㄴ ICE"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/payment_OptionPrice4"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="+ 500원"
+            android:textColor="#AAAAAA"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+</LinearLayout>

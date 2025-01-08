@@ -1,0 +1,297 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 상단: 커피 이미지와 설명을 가로로 배치 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- 커피 이미지 -->
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="커피 이미지"
+            android:src="@drawable/cafe1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/selectMenuName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="카페라떼"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/selectMenuPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4,800원"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 커피 설명 -->
+    <TextView
+        android:id="@+id/TextViewCoffeeInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="에스프레소에 스팀 밀크를 올린 우유를 넣은 커피."
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <!-- ScrollView for options -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <!-- 옵션 버튼들을 테이블 레이아웃으로 배치 -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:stretchColumns="1">
+
+            <!-- 첫 번째 줄: 핫/아이스 버튼 제목 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="left"
+                android:text="HOT / ICE"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- 핫/아이스 버튼 -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_hot"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="HOT\n+0원"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_ice"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="ICE\n+500원"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <!-- 빈 버튼을 추가하여 공간 만들기 -->
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text=""
+                    android:visibility="invisible"
+                    tools:visibility="invisible" />
+            </TableRow>
+
+            <!-- 두 번째 줄: 사이즈 버튼 (Small, Medium, Large) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="left"
+                android:text="SIZE"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_size_small"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="Small\n+0원"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:onClick="onOptionClicked" />
+
+                <Button
+                    android:id="@+id/btn_size_medium"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="Medium\n+500원"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:onClick="onOptionClicked" />
+
+                <Button
+                    android:id="@+id/btn_size_large"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="Large\n+1000원"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:onClick="onOptionClicked" />
+            </TableRow>
+
+            <!-- 세 번째 줄: 시럽 옵션 제목 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="left"
+                android:text="SYRUP"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- 시럽 옵션 버튼들 -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/topping1"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="바닐라\n시럽\n+500원"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:onClick="onOptionClicked" />
+
+                <Button
+                    android:id="@+id/topping2"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="헤이즐넛\n시럽\n+500원"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:onClick="onOptionClicked" />
+
+                <Button
+                    android:id="@+id/topping3"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="시럽없음\n+0원"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:onClick="onOptionClicked" />
+            </TableRow>
+
+            <!-- 네 번째 줄: 기타 옵션 제목 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="기타"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- 얼음 양 관련 버튼들 -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/etc1"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:onClick="onOptionClicked"
+                    android:text="얼음양\n없이\n+0원"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/etc2"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:onClick="onOptionClicked"
+                    android:text="얼음양\n보통\n+0원"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/etc3"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:onClick="onOptionClicked"
+                    android:text="얼음양\n많이\n+0원"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <!-- 선택 완료 버튼 (맨 밑에 배치) -->
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="선택완료"
+        android:textSize="18sp"
+        android:enabled="false" /> <!-- 초기에는 비활성화 -->
+</LinearLayout>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="포인트를 적립하시겠습니까?"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/point_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="40sp"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:columnCount="3"
+
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="@color/purple"
+            android:background="@drawable/button_03"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/number9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"
+            android:textSize="25sp"
+            android:background="#ffffff"
+            android:layout_gravity="center"
+            android:contentDescription="초기화 버튼"/>
+
+
+        <Button
+            android:id="@+id/number0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:background="@drawable/button_03"
+            android:textColor="@color/purple"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_margin="5dp"/>
+
+        <ImageButton
+            android:id="@+id/backspace_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_backspace"
+            android:contentDescription="백스페이스 버튼"/>
+
+    </GridLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="left"
+        android:layout_margin="30dp">
+
+        <Button
+            android:id="@+id/point_deny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="포인드 적립 안 함"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/button_04"
+            android:textSize="15sp"
+            android:textColor="#ED8282"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/point_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="완  료"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:padding="10dp"
+            android:background="@drawable/button_04"
+            android:textSize="15sp"
+            android:textColor="#ED8282"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
