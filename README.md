@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
 두 버튼 모두 아직까지는 다음 화면으로 넘어가는 기능만 구현했다.  
 
 # activity_menu.xml
-![image](https://github.com/user-attachments/assets/9fa42486-02b4-4204-b5b0-40ed23d33794)
+![image](https://github.com/user-attachments/assets/9fa42486-02b4-4204-b5b0-40ed23d33794)   
 메뉴 화면의 좌측 하단에 리스트뷰를 사용하여 장바구니를 만들었다.  
 
 # activity_listitem.xml
-![image](https://github.com/user-attachments/assets/0bbf66da-0c06-4341-aa94-4f386ad49b62)
+![image](https://github.com/user-attachments/assets/0bbf66da-0c06-4341-aa94-4f386ad49b62)  
 리스트뷰에 연결할 리스트 아이템을 디자인했다.  
 
