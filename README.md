@@ -30,5 +30,5 @@ public class MainActivity extends AppCompatActivity {
 ![image](https://github.com/user-attachments/assets/9fa42486-02b4-4204-b5b0-40ed23d33794)   
 # activity_listitem.xml
 ![image](https://github.com/user-attachments/assets/0bbf66da-0c06-4341-aa94-4f386ad49b62)  
-메뉴 화면의 좌측 하단에 장바구니를 만들었다.
+메뉴 화면의 좌측 하단에 장바구니를 만들었다.  
 리스트뷰와 리스트뷰에 연결할 리스트 아이템을 디자인했다.  
