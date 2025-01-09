@@ -1,9 +1,11 @@
-##12/23(목)
+## 12/23(목)
 
-#activity_main.xml
+# activity_main.xml
+
 ![image](https://github.com/user-attachments/assets/8b44e6da-04dd-48d9-9263-d8de583177d0)
 
-#MainActivity.java
+# MainActivity.java
+
 '''
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +21,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
 '''
 
-#activity_menu.xml
+
+# activity_menu.xml
+
 ![image](https://github.com/user-attachments/assets/9fa42486-02b4-4204-b5b0-40ed23d33794)
 
