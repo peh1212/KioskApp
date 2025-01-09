@@ -6,7 +6,7 @@
 
 # MainActivity.java
 
-'''
+```
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-'''
+```
 
 # activity_menu.xml
 
