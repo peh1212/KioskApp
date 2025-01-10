@@ -814,16 +814,408 @@ public class MenuActivity extends AppCompatActivity {
 <br/><br/>
 
 # 1/2(목)~1/3(금)
+결제 화면과 합쳤다.  
 ## activity_payment.xml
 ![image](https://github.com/user-attachments/assets/7c179fd6-9765-47ef-a73b-4b04ed1aa3ac)  
 ## activity_paymentlist.xml
 ![image](https://github.com/user-attachments/assets/d1571f9b-1d29-40b3-ae91-04a3922ab4b1)  
-결제 화면과 합쳤다.  
-## dialog_easy_payment.xml
-![image](https://github.com/user-attachments/assets/51e399e1-cf9d-4b3d-9649-fab8d745e96b)  
-
+결제 버튼을 눌렀을 시 해당 화면으로 넘어온다.  
+액티비티로 전환되도록 하였다.  
 
 ## MenuActivity.java
-```
+```Java
+public class MenuActivity extends AppCompatActivity {
 
+    ...
+
+    // 결제버튼 눌렀을 시 결제창으로 화면이 넘어가는 온클릭이벤트
+    public void onClickedButtonPayment(View view) {
+        if (menuName.size() < 1) {
+            Toast.makeText(this, "메뉴를 선택해 주세요.", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(MenuActivity.this, PaymentActivity.class);
+            // 인텐트를 전달할 때, 장바구니 정보에 대한 배열을 같이 넘겨준다.
+                // 장바구니 정보
+                intent.putStringArrayListExtra("menuName", menuName);
+                intent.putIntegerArrayListExtra("menuQuantity", menuQuantity);
+                intent.putIntegerArrayListExtra("menuPrice", menuPrice);
+                // 총 갯수
+                intent.putExtra("totalcnt", totalcnt);
+                // 옵션 종류와 가격
+                intent.putStringArrayListExtra("menuOption1", menuOption1);
+                intent.putStringArrayListExtra("menuOption2", menuOption2);
+                intent.putStringArrayListExtra("menuOption3", menuOption3);
+                intent.putStringArrayListExtra("menuOption4", menuOption4);
+                intent.putIntegerArrayListExtra("HotPrice", HotPrice);
+                intent.putIntegerArrayListExtra("SizePrice", SizePrice);
+                intent.putIntegerArrayListExtra("ToppingPrice", ToppingPrice);
+            startActivity(intent); // PointDialog 액티비티로 이동
+        }
+    }
 ```
+장바구니에 있었던 아이템들은 인텐트로 같이 전달된다.  
+
+## PaymentActivity.Java
+```Java
+public class PaymentActivity extends AppCompatActivity {
+
+    ArrayList<String> menuNames, menuOption1, menuOption2, menuOption3, menuOption4;
+    ArrayList<Integer> menuQuantities, menuPrices, HotPrice, SizePrice, ToppingPrice;
+    ListView payList;
+    TextView payment_totalQuantity, payment_totalPrice;
+    int totalcnt = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_payment);
+
+        Button CardPaymentButton = findViewById(R.id.cardPaymentButton);
+        Button SimplePaymentButton = findViewById(R.id.simplePaymentButton);
+        Button PointButton = findViewById(R.id.point_button);
+
+        // 인텐트에서 결제 리스트 배열 가져오기
+        Intent intent = getIntent();
+        menuNames = intent.getStringArrayListExtra("menuName");
+        menuQuantities = intent.getIntegerArrayListExtra("menuQuantity");
+        menuPrices = intent.getIntegerArrayListExtra("menuPrice");
+        totalcnt = intent.getIntExtra("totalcnt", 0);
+        menuOption1 = intent.getStringArrayListExtra("menuOption1");
+        menuOption2 = intent.getStringArrayListExtra("menuOption2");
+        menuOption3 = intent.getStringArrayListExtra("menuOption3");
+        menuOption4 = intent.getStringArrayListExtra("menuOption4");
+        HotPrice = intent.getIntegerArrayListExtra("HotPrice");
+        SizePrice = intent.getIntegerArrayListExtra("SizePrice");
+        ToppingPrice = intent.getIntegerArrayListExtra("ToppingPrice");
+
+        if (menuNames == null) menuNames = new ArrayList<String>();
+        if (menuQuantities == null) menuQuantities = new ArrayList<Integer>();
+        if (menuPrices == null) menuPrices = new ArrayList<Integer>();
+
+        // 토탈갯수 토탈금액
+        payment_totalQuantity = findViewById(R.id.payment_totalQuantity);
+        payment_totalQuantity.setText(String.valueOf(totalcnt) +"개");
+        payment_totalPrice = findViewById(R.id.payment_totalPrice);
+        int totalPrice = 0;
+        for (int i = 0; i < menuPrices.size(); i++) {
+            totalPrice += menuPrices.get(i)*menuQuantities.get(i);
+        }
+        final TextView paymentPrice = findViewById(R.id.paymentPrice);
+        paymentPrice.setText("주문 금액: " + getPriceFormattedNumber(totalPrice));
+        payment_totalPrice.setText(getPriceFormattedNumber(totalPrice-1500));
+
+        // 결제 리스트 어댑터와 리스트뷰 연결
+        CustomList adapter = new CustomList(PaymentActivity.this, menuNames, menuQuantities, menuPrices);
+        payList = (ListView) findViewById(R.id.lyj_recyclerViewItemResult);
+        payList.setAdapter(adapter);
+
+        CardPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCardPaymentDialog();
+            }
+        });
+
+        SimplePaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSimplePaymentDialog();
+            }
+        });
+
+        PointButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 포인트 다이얼로그 액티비티로 이동
+                Intent intent = new Intent(PaymentActivity.this, PointDialog.class);
+                startActivity(intent); // PointDialog 액티비티로 이동
+            }
+        });
+    }
+
+    // 1234 -> 1,234원
+    private String getPriceFormattedNumber(int Price) {
+        NumberFormat numberFormat = getNumberInstance(Locale.US);
+        String formattedPrice = numberFormat.format(Price) + "원";
+        return formattedPrice;
+    }
+
+    //카드 결제창
+    private void showCardPaymentDialog() {
+        // 다이얼로그 생성
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_card_payment);
+
+        // 다이얼로그 창 크기 조정
+        dialog.getWindow().setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+
+        dialog.show();
+
+        // 닫기 버튼 설정
+        ImageView closeButton = dialog.findViewById(R.id.btn_close);
+        closeButton.setOnClickListener(v -> {
+            dialog.dismiss(); // 다이얼로그 닫기
+            showPaymentScreen(); // 결제 화면으로 이동
+        });
+    }
+
+    //간편 결제창
+    private void showSimplePaymentDialog() {
+        // 다이얼로그 생성
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_easy_payment);
+
+        // 다이얼로그 창 크기 조정
+        dialog.getWindow().setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        dialog.show();
+
+        // 닫기 버튼 설정
+        ImageView closeButton = dialog.findViewById(R.id.btn_close);
+        closeButton.setOnClickListener(v -> {
+            dialog.dismiss(); // 다이얼로그 닫기
+            showPaymentScreen(); // 결제 화면으로 이동
+        });
+    }
+
+    private void showPaymentScreen() {
+
+    }
+
+    public class CustomList extends BaseAdapter {
+        private final Activity context;
+        private final ArrayList<String> menuNames;
+        private final ArrayList<Integer> menuQuantities;
+        private final ArrayList<Integer> menuPrices;
+
+        public CustomList(Activity context, ArrayList<String> menuNames, ArrayList<Integer> menuQuantities, ArrayList<Integer> menuPrices) {
+            this.context = context;
+            this.menuNames = menuNames != null ? menuNames : new ArrayList<String>();
+            this.menuQuantities = menuQuantities != null ? menuQuantities : new ArrayList<Integer>();
+            this.menuPrices = menuPrices != null ? menuPrices : new ArrayList<Integer>();
+        }
+
+        @Override
+        public int getCount() {
+            return menuNames.size(); // 리스트의 크기 반환
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;  // 필요 없으면 null 반환
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView = inflater.inflate(R.layout.activity_paymentlist, null, true);
+
+            final TextView payment_Name = rowView.findViewById(R.id.payment_Name);
+            final TextView payment_Quantity = rowView.findViewById(R.id.payment_Quantity);
+            final TextView payment_Price = rowView.findViewById(R.id.payment_Price);
+
+            final TextView payment_OptionName1 = rowView.findViewById(R.id.payment_OptionName1);
+            final TextView payment_OptionName2 = rowView.findViewById(R.id.payment_OptionName2);
+            final TextView payment_OptionName3 = rowView.findViewById(R.id.payment_OptionName3);
+            final TextView payment_OptionName4 = rowView.findViewById(R.id.payment_OptionName4);
+            final TextView payment_OptionPrice1 = rowView.findViewById(R.id.payment_OptionPrice1);
+            final TextView payment_OptionPrice2 = rowView.findViewById(R.id.payment_OptionPrice2);
+            final TextView payment_OptionPrice3 = rowView.findViewById(R.id.payment_OptionPrice3);
+            final TextView payment_OptionPrice4 = rowView.findViewById(R.id.payment_OptionPrice4);
+
+            payment_Name.setText(menuNames.get(position));
+            payment_Quantity.setText(String.valueOf(menuQuantities.get(position)) +"개");
+            payment_Price.setText(getPriceFormattedNumber(menuPrices.get(position)*menuQuantities.get(position)));
+            payment_OptionName1.setText("ㄴ " + menuOption1.get(position));
+            payment_OptionName2.setText("ㄴ " + menuOption2.get(position));
+            payment_OptionName3.setText("ㄴ " + menuOption3.get(position));
+            payment_OptionName4.setText("ㄴ " + menuOption4.get(position));
+            if (HotPrice.get(position) == 0) {
+                payment_OptionPrice1.setText("");
+            }
+            else {
+
+                payment_OptionPrice1.setText("+ " + getPriceFormattedNumber(HotPrice.get(position)));
+            }
+            if (SizePrice.get(position) == 0) {
+                payment_OptionPrice2.setText("");
+            }
+            else {
+                payment_OptionPrice2.setText("+ " + getPriceFormattedNumber(SizePrice.get(position)));
+            }
+            if (ToppingPrice.get(position) == 0) {
+                payment_OptionPrice3.setText("");
+            }
+            else {
+                payment_OptionPrice3.setText("+ " + getPriceFormattedNumber(ToppingPrice.get(position)));
+            }
+            payment_OptionPrice4.setText("");
+            return rowView;
+        }
+    }
+}
+```
+인텐트로 넘어온 배열을 결제화면 액티비티에서 받아서 리스트뷰에 연결해준다.  
+결제화면 액티비티와 연결된 다른 액티비티들은 그대로 사용 가능했다.  
+
+## MenuActivity.Java
+```Java
+public class MenuActivity extends AppCompatActivity {
+
+    ...
+
+    // 메뉴를 하나 골랐을 때 나타나는 옵션선택창
+    public void buttonAddItem(View v) {
+        // 커스텀 대화메뉴를 생성하여 띄운다.
+        Dialog optionDialog = new Dialog(MenuActivity.this);
+        optionDialog.setContentView(R.layout.activity_option);
+        optionDialog.show();
+        resetSelections();
+        
+        ...
+
+        Button hotButton = optionDialog.findViewById(R.id.btn_hot);
+        Button iceButton = optionDialog.findViewById(R.id.btn_ice);
+        hotButton.setOnClickListener(view1 -> {
+            isHotSelected = true;
+            SelectedHot = 1;
+            SelectedHotPrice = 0;
+            setButtonStyle(hotButton, iceButton, iceButton);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        iceButton.setOnClickListener(view1 -> {
+            isHotSelected = true;
+            SelectedHot = 2;
+            SelectedHotPrice = 500;
+            setButtonStyle(iceButton, hotButton, hotButton);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+
+        Button smallButton = optionDialog.findViewById(R.id.btn_size_small);
+        Button mediumButton = optionDialog.findViewById(R.id.btn_size_medium);
+        Button largeButton = optionDialog.findViewById(R.id.btn_size_large);
+        smallButton.setOnClickListener(view1 -> {
+            isSizeSelected = true;
+            SelectedSize = 1;
+            SelectedSizePrice = 0;
+            setButtonStyle(smallButton, mediumButton, largeButton);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        mediumButton.setOnClickListener(view1 -> {
+            isSizeSelected = true;
+            SelectedSize = 2;
+            SelectedSizePrice = 500;
+            setButtonStyle(mediumButton, smallButton, largeButton);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        largeButton.setOnClickListener(view1 -> {
+            isSizeSelected = true;
+            SelectedSize = 3;
+            SelectedSizePrice = 1000;
+            setButtonStyle(largeButton, smallButton, mediumButton);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+
+        Button topping1Button = optionDialog.findViewById(R.id.topping1);
+        Button topping2Button = optionDialog.findViewById(R.id.topping2);
+        Button topping3Button = optionDialog.findViewById(R.id.topping3);
+        topping1Button.setOnClickListener(view1 -> {
+            isSyrupSelected = true;
+            SelectedTopping = 1;
+            SelectedToppingPrice = 500;
+            setButtonStyle(topping1Button, topping2Button, topping3Button);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        topping2Button.setOnClickListener(view1 -> {
+            isSyrupSelected = true;
+            SelectedTopping = 2;
+            SelectedToppingPrice = 500;
+            setButtonStyle(topping2Button, topping1Button, topping3Button);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        topping3Button.setOnClickListener(view1 -> {
+            isSyrupSelected = true;
+            SelectedTopping = 3;
+            SelectedToppingPrice = 0;
+            setButtonStyle(topping3Button, topping1Button, topping2Button);
+            selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) + SelectedHotPrice + SelectedSizePrice + SelectedToppingPrice));
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+
+        Button ice1Button = optionDialog.findViewById(R.id.etc1);
+        Button ice2Button = optionDialog.findViewById(R.id.etc2);
+        Button ice3Button = optionDialog.findViewById(R.id.etc3);
+        ice1Button.setOnClickListener(view1 -> {
+            isIceAmountSelected = true;
+            SelectedIce = 1;
+            setButtonStyle(ice1Button, ice2Button, ice3Button);
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        ice2Button.setOnClickListener(view1 -> {
+            isIceAmountSelected = true;
+            SelectedIce = 2;
+            setButtonStyle(ice2Button, ice1Button, ice3Button);
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+        ice3Button.setOnClickListener(view1 -> {
+            isIceAmountSelected = true;
+            SelectedIce = 3;
+            setButtonStyle(ice3Button, ice1Button, ice2Button);
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected)
+                btnComplete.setEnabled(true);
+        });
+
+        ...
+
+    }
+
+    private void setButtonStyle(Button setSelected, Button removeSelected1, Button removeSelected2) {
+        setSelected.setBackgroundResource(R.drawable.button_border_selected);
+        setSelected.setTextColor(getResources().getColor(android.R.color.black));
+        setSelected.setTypeface(null, Typeface.BOLD);
+        removeSelected1.setBackgroundResource(R.drawable.button_border);
+        removeSelected1.setTextColor(getResources().getColor(android.R.color.black));
+        removeSelected1.setTypeface(null, Typeface.NORMAL);
+        removeSelected2.setBackgroundResource(R.drawable.button_border);
+        removeSelected2.setTextColor(getResources().getColor(android.R.color.black));
+        removeSelected2.setTypeface(null, Typeface.NORMAL);
+    }
+    
+    ...
+
+}
+```
+옵션 버튼을 눌렀을 시 버튼 스타일이 적용되지 않는 문제도 해결하였다.  
+GPT와 Copilot에게 계속 물어보니 버튼 뷰를 제대로 참조하지 못해서 그렇다고 해서, 메뉴 추가 버튼을 눌렀을 때 뜨는 Dialog 안에서 옵션 선택들을 처리하도록 OnOptionClicked 코드를 buttonAddItem 안으로 옮긴 후 정리하였다.  
+
+<br/><br/>
+
+# 1/6(월)~1/7(화)
+메뉴 화면의 탭 레이아웃과 합쳤다.
