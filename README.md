@@ -347,7 +347,7 @@ public class MenuActivity extends AppCompatActivity {
 
 <br/><br/>
 
-# 12/30(월)
+# 12/30(월)~12/31(화)
 팀원들이 작업한 코드와 연결을 시도해보았다.
 ## activity_option.xml
 ![image](https://github.com/user-attachments/assets/e8e83fa7-e7be-4011-a3a8-2fe7957e7b89)  
@@ -357,18 +357,463 @@ public class MenuActivity extends AppCompatActivity {
 이 청색 테두리 스타일은 @drawable/button_border_selected.xml에 작성하였다.  
 
 ## MenuActivity.java
-```
+```Java
+public class MenuActivity extends AppCompatActivity {
 
+    ListView basketList;
+    String[] menuNameArray = {};
+    String[] menuOption1Array = {};
+    String[] menuOption2Array = {};
+    String[] menuOption3Array = {};
+    String[] menuOption4Array = {};
+    int[] menuQuantityArray = {};
+    int[] menuPriceArray = {};
+    ArrayList<String> menuName;
+    ArrayList<String> menuOption1;
+    ArrayList<String> menuOption2;
+    ArrayList<String> menuOption3;
+    ArrayList<String> menuOption4;
+    ArrayList<Integer> menuQuantity;
+    ArrayList<Integer> menuPrice;
+    CustomList adapter;
+
+    TextView textViewMenuName, textViewPrice, textViewTotalCount, textViewTotalPrice, textViewOption, selectMenuName, selectMenuPrice;
+    Button buttonAddItem, buttonMinus, buttonPlus, buttonX, buttonAC, buttonAddItem1, buttonAddItem2, buttonAddItem3, buttonAddItem4;
+
+    private boolean isHotSelected = false;
+    private int SelectedHot = 0;
+    private int SelectedHotPrice = 0;
+    private boolean isSizeSelected = false;
+    private int SelectedSize = 0;
+    private int SelectedSizePrice = 0;
+    private boolean isSyrupSelected = false;
+    private int SelectedTopping = 0;
+    private int SelectedToppingPrice = 0;
+    private boolean isIceAmountSelected = false;
+    private int SelectedIce = 0;
+    private Button btnComplete;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu);
+
+        // 아이템을 동적으로 관리하기 위하여 배열을 어레이리스트로 만든다.
+        menuName = new ArrayList<>(Arrays.asList(menuNameArray));
+        menuOption1 = new ArrayList<>(Arrays.asList(menuOption1Array));
+        menuOption2 = new ArrayList<>(Arrays.asList(menuOption2Array));
+        menuOption3 = new ArrayList<>(Arrays.asList(menuOption3Array));
+        menuOption4 = new ArrayList<>(Arrays.asList(menuOption4Array));
+        menuQuantity = new ArrayList<>();
+        for (int quantity : menuQuantityArray) {
+            menuQuantity.add(quantity);
+        }
+        menuPrice = new ArrayList<>();
+        for (int price : menuPriceArray) {
+            menuPrice.add(price);
+        }
+
+        // 어댑터를 생성하여 배열을 리스트뷰에 연결한다. CustomList 는 직접 만들것
+        adapter = new CustomList(MenuActivity.this);
+        basketList=(ListView)findViewById(R.id.basketList);
+        basketList.setAdapter(adapter);
+
+        // activity_menu.xml 에 있는 버튼과 텍스트뷰 등 아이디 가져오기.
+        buttonAC = findViewById(R.id.buttonAC);
+        textViewTotalCount = findViewById(R.id.textViewTotalCount);
+        textViewTotalPrice = findViewById(R.id.textViewTotalPrice);
+    }
+
+
+    // 메뉴를 하나 골랐을 때 나타나는 옵션선택창
+    public void buttonAddItem(View v) {
+        // 커스텀 대화메뉴를 생성하여 띄운다.
+        Dialog optionDialog = new Dialog(MenuActivity.this);
+        optionDialog.setContentView(R.layout.activity_option);
+        optionDialog.show();
+        resetSelections();
+
+        // activity_option.xml 에 있는 버튼과 텍스트뷰 등 아이디 가져오기.
+        selectMenuPrice = optionDialog.findViewById(R.id.selectMenuPrice);
+        selectMenuName = optionDialog.findViewById(R.id.selectMenuName);
+        btnComplete = optionDialog.findViewById(R.id.btn_complete);
+
+        // 폰트를 가져온다.
+        Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/NanumBarunGothic-YetHangul.ttf");
+        btnComplete.setTypeface(customFont);
+        btnComplete.setEnabled(false);
+
+        // 2. 버튼 리스너 설정: 여러 버튼들에 대해 클릭 리스너 설정
+        int[] buttonIds = {
+                R.id.btn_hot, R.id.btn_ice,  // 핫/아이스 버튼
+                R.id.btn_size_small, R.id.btn_size_medium, R.id.btn_size_large,  // 사이즈 선택 버튼
+                R.id.topping1, R.id.topping2, R.id.topping3, // 시럽 선택 버튼
+                R.id.etc1, R.id.etc2, R.id.etc3 // 얼음 양 선택 버튼
+        };
+
+        // 3. 각 버튼에 클릭 리스너를 설정: 버튼 클릭 시 onOptionClicked() 메서드 호출
+        for (int id : buttonIds) {
+            optionDialog.findViewById(id).setOnClickListener(MenuActivity.this::onOptionClicked); // 각 버튼에 클릭 리스너 연결
+        }
+
+        // 선택한 메뉴를 배열에 저장하고 화면에 보여준다.
+        buttonAddItem1 = findViewById(R.id.buttonAddItem1);
+        buttonAddItem2 = findViewById(R.id.buttonAddItem2);
+        buttonAddItem3 = findViewById(R.id.buttonAddItem3);
+        buttonAddItem4 = findViewById(R.id.buttonAddItem4);
+        if (v.getId() == buttonAddItem1.getId()) {
+            menuName.add("카페라떼");
+            menuPrice.add(4800);
+        } else if (v.getId() == buttonAddItem2.getId()) {
+            menuName.add("에스프레소");
+            menuPrice.add(3800);
+        } else if (v.getId() == buttonAddItem3.getId()) {
+            menuName.add("아메리카노");
+            menuPrice.add(3300);
+        } else if (v.getId() == buttonAddItem4.getId()) {
+            menuName.add("레몬에이드");
+            menuPrice.add(6000);
+        }
+        menuQuantity.add(1);
+        selectMenuName.setText(String.valueOf(menuName.get(menuName.size() - 1)));
+        selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1)));
+
+        // 뒤로가기 버튼으로 창을 닫았을 경우, 배열에 먼저 저장한것들 다시 지우기
+        optionDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    // 뒤로가기 버튼 눌렀을 때 동작을 여기에 구현
+                    // 예: optionDialog.dismiss();  // Dialog를 닫지 않음
+                    // return true;  // 뒤로가기를 막기 위해 true를 리턴
+                    menuName.remove(menuName.size() - 1);
+                    menuPrice.remove(menuPrice.size() - 1);
+                    menuQuantity.remove(menuQuantity.size() - 1);
+                    resetSelections();
+                    optionDialog.dismiss(); // 뒤로가기는 가능하게 하는데 뒤로가기버튼의 동작으로 처리하지 않고 dismiss로 창을 정상적으로 종료시켜준다.
+                    return true;  // 뒤로가기를 허용하려면 false를 리턴
+                }
+                return false;
+            }
+        });
+
+        // 4. "선택완료" 버튼 클릭 시의 동작 설정
+        btnComplete.setOnClickListener(view2 -> {
+            // 모든 항목이 선택되었을 때만 선택 완료 버튼이 활성화됨
+            if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected) {
+                // 배열에 옵션정보들 저장 후 선택완료처리
+                // 핫/아이스
+                if (SelectedHot == 1) {
+                    menuOption1.add("HOT");
+                } else if (SelectedHot == 2) {
+                    menuOption1.add("ICE");
+                }
+                // 어떤 사이즈
+                if (SelectedSize == 1) {
+                    menuOption2.add("SMALL");
+                } else if (SelectedSize == 2) {
+                    menuOption2.add("MEDIUM");
+                } else if (SelectedSize == 3) {
+                    menuOption2.add("LARGE");
+                }
+                // 어떤 시럽
+                if (SelectedTopping == 1) {
+                    menuOption3.add("바닐라 시럽");
+                } else if (SelectedTopping == 2) {
+                    menuOption3.add("헤이즐넛 시럽");
+                } else if (SelectedTopping == 3) {
+                    menuOption3.add("시럽 없음");
+                }
+                // 얼음 얼마나
+                if (SelectedIce == 1) {
+                    menuOption4.add("얼음양 없이");
+                } else if (SelectedIce == 2) {
+                    menuOption4.add("얼음양 보통");
+                } else if (SelectedIce == 3) {
+                    menuOption4.add("얼음양 많이");
+                }
+                menuPrice.set(menuPrice.size() - 1, menuPrice.get(menuPrice.size() - 1) +SelectedHotPrice +SelectedSizePrice +SelectedToppingPrice);
+                resetSelections();
+                adapter.notifyDataSetChanged();
+                optionDialog.dismiss();
+            }
+        });
+    }
+
+    // 옵션선택창을 처음 열었을 때 초기값 설정
+    private void resetSelections() {
+        isHotSelected = false;
+        isSizeSelected = false;
+        isSyrupSelected = false;
+        isIceAmountSelected = false;
+        SelectedHot = 0;
+        SelectedSize = 0;
+        SelectedTopping = 0;
+        SelectedIce = 0;
+        SelectedHotPrice = 0;
+        SelectedSizePrice = 0;
+        SelectedToppingPrice = 0;
+    }
+
+    // 1234 -> 1,234원
+    private String getPriceFormattedNumber(int Price) {
+        NumberFormat numberFormat = getNumberInstance(Locale.US);
+        String formattedPrice = numberFormat.format(Price) + "원";
+        return formattedPrice;
+    }
+
+    // 5. 버튼 클릭 시 호출되는 메서드: 선택한 옵션에 따라 상태 갱신
+    public void onOptionClicked(View view) {
+        // 뷰(선택한 옵션)들은 activity_option.xml 에 있으므로 인플레이터로 가져온다.
+        View optionView = getLayoutInflater().inflate(R.layout.activity_option, null);
+        Button hotButton = optionView.findViewById(R.id.btn_hot);
+        Button iceButton = optionView.findViewById(R.id.btn_ice);
+        Button smallButton = optionView.findViewById(R.id.btn_size_small);
+        Button mediumButton = optionView.findViewById(R.id.btn_size_medium);
+        Button largeButton = optionView.findViewById(R.id.btn_size_large);
+        Button topping1Button = optionView.findViewById(R.id.topping1);
+        Button topping2Button = optionView.findViewById(R.id.topping2);
+        Button topping3Button = optionView.findViewById(R.id.topping3);
+        Button ice1Button = optionView.findViewById(R.id.etc1);
+        Button ice2Button = optionView.findViewById(R.id.etc2);
+        Button ice3Button = optionView.findViewById(R.id.etc3);
+
+        // 6. 핫/아이스 선택 버튼 클릭 시
+        if (view.getId() == hotButton.getId() || view.getId() == iceButton.getId()) {
+            // 핫/아이스 선택 상태 갱신
+            isHotSelected = true;
+
+            // 핫 선택했는지 아이스 선택했는지 저장
+                if (view.getId() == hotButton.getId()) {
+                    SelectedHot = 1;
+                    SelectedHotPrice = 0;
+                } else if (view.getId() == iceButton.getId()) {
+                    SelectedHot = 2;
+                    SelectedHotPrice = 500;
+                }
+
+            // 7. 선택된 버튼에 스타일 적용
+            updateButtonState(hotButton, view.getId() == hotButton.getId()); // 핫 버튼 스타일 갱신
+            updateButtonState(iceButton, view.getId() == iceButton.getId()); // 아이스 버튼 스타일 갱신
+        }
+        // 8. 사이즈 버튼 클릭 시
+        if (view.getId() == smallButton.getId() || view.getId() == mediumButton.getId() || view.getId() == largeButton.getId()) {
+            // 사이즈 항목이 선택되었으면 true로 설정
+            isSizeSelected = true;
+
+            // 어떤 사이즈 선택했는지 저장
+            if (view.getId() == smallButton.getId()) {
+                SelectedSize = 1;
+                SelectedSizePrice = 0;
+            } else if (view.getId() == mediumButton.getId()) {
+                SelectedSize = 2;
+                SelectedSizePrice = 500;
+            } else if (view.getId() == largeButton.getId()) {
+                SelectedSize = 3;
+                SelectedSizePrice = 1000;
+            }
+
+            // 9. 선택된 버튼에 스타일 적용
+            updateButtonState(smallButton, view.getId() == smallButton.getId()); // 작은 사이즈 버튼 스타일 갱신
+            updateButtonState(mediumButton, view.getId() == mediumButton.getId()); // 중간 사이즈 버튼 스타일 갱신
+            updateButtonState(largeButton, view.getId() == largeButton.getId()); // 큰 사이즈 버튼 스타일 갱신
+        }
+        // 10. 시럽 버튼 클릭 시
+        if (view.getId() == topping1Button.getId() || view.getId() == topping2Button.getId() || view.getId() == topping3Button.getId()) {
+            // 시럽 항목이 선택되었으면 true로 설정
+            isSyrupSelected = true;
+
+            // 어떤 시럽 선택했는지 저장
+            if (view.getId() == topping1Button.getId()) {
+                SelectedTopping = 1;
+                SelectedToppingPrice = 500;
+            } else if (view.getId() == topping2Button.getId()) {
+                SelectedTopping = 2;
+                SelectedToppingPrice = 500;
+            } else if (view.getId() == topping3Button.getId()) {
+                SelectedTopping = 3;
+                SelectedToppingPrice = 0;
+            }
+
+            // 11. 선택된 버튼에 스타일 적용
+            updateButtonState(topping1Button, view.getId() == topping1Button.getId()); // 첫 번째 시럽 버튼 스타일 갱신
+            updateButtonState(topping2Button, view.getId() == topping2Button.getId()); // 두 번째 시럽 버튼 스타일 갱신
+            updateButtonState(topping3Button, view.getId() == topping3Button.getId()); // 세 번째 시럽 버튼 스타일 갱신
+        }
+        // 12. 얼음 양 버튼 클릭 시
+        if (view.getId() == ice1Button.getId() || view.getId() == ice2Button.getId() || view.getId() == ice3Button.getId()) {
+            // 얼음 양 항목이 선택되었으면 true로 설정
+            isIceAmountSelected = true;
+
+            // 얼음양 어떤거 선택했는지 저장
+            if (view.getId() == ice1Button.getId()) {
+                SelectedIce = 1;
+            } else if (view.getId() == ice2Button.getId()) {
+                SelectedIce = 2;
+            } else if (view.getId() == ice3Button.getId()) {
+                SelectedIce = 3;
+            }
+
+            // 13. 선택된 버튼에 스타일 적용
+            updateButtonState(ice1Button, view.getId() == ice1Button.getId()); // 첫 번째 얼음 양 버튼 스타일 갱신
+            updateButtonState(ice2Button, view.getId() == ice2Button.getId()); // 두 번째 얼음 양 버튼 스타일 갱신
+            updateButtonState(ice3Button, view.getId() == ice3Button.getId()); // 세 번째 얼음 양 버튼 스타일 갱신
+        }
+
+        // 옵션 선택시마다 가격을 갱신해서 띄워준다.
+        selectMenuPrice.setText(getPriceFormattedNumber(menuPrice.get(menuPrice.size() - 1) +SelectedHotPrice +SelectedSizePrice +SelectedToppingPrice));
+
+        // 14. 모든 항목이 선택되었으면 "선택완료" 버튼을 활성화
+        if (isHotSelected && isSizeSelected && isSyrupSelected && isIceAmountSelected) {
+            btnComplete.setEnabled(true); // "선택완료" 버튼을 활성화
+        } else {
+            btnComplete.setEnabled(false);  // 하나라도 선택되지 않으면 "선택완료" 버튼을 비활성화
+        }
+    }
+
+    // 15. 버튼 스타일 업데이트 메서드: 선택된 버튼과 선택되지 않은 버튼에 대한 스타일 변경
+    private void updateButtonState(View view, boolean isSelected) {
+        if (view != null && view instanceof Button) {
+        Button button = (Button) view; // 버튼 뷰를 Button 객체로 변환
+            if (isSelected) {
+                // 16. 버튼이 선택된 경우 스타일 적용
+                button.setBackgroundResource(R.drawable.button_border_selected);  // 선택된 버튼 테두리
+                button.setTextColor(getResources().getColor(android.R.color.black));  // 선택된 버튼의 텍스트 색상
+                button.setTypeface(null, Typeface.BOLD);  // 선택된 버튼의 텍스트를 굵게 설정
+            } else {
+                // 17. 버튼이 선택되지 않은 경우 기본 스타일로 복귀
+                button.setBackgroundResource(R.drawable.button_border);  // 기본 버튼 테두리
+                button.setTextColor(getResources().getColor(android.R.color.black));  // 기본 버튼의 텍스트 색상
+                button.setTypeface(null, Typeface.NORMAL);  // 기본 텍스트 스타일
+            }
+        }
+    }
+
+    public class CustomList extends ArrayAdapter<String> {
+        private final Activity context;
+        public CustomList(Activity context) {
+            super(context, R.layout.activity_listitem, menuName);
+            this.context = context;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView= inflater.inflate(R.layout.activity_listitem, null, true);
+
+            final TextView textViewMenuName = rowView.findViewById(R.id.textViewMenuName);
+            final TextView textViewOption = rowView.findViewById(R.id.textViewOption);
+            final TextView textViewPrice = rowView.findViewById(R.id.textViewPrice);
+            final TextView textViewQuantity = rowView.findViewById(R.id.textViewQuantity);
+            textViewMenuName.setText(menuName.get(position));
+            textViewOption.setText(menuOption1.get(position) +" + "+ menuOption2.get(position) +" + "+ menuOption3.get(position) +" + "+ menuOption4.get(position));
+            textViewPrice.setText(getPriceFormattedNumber(menuPrice, menuQuantity, position));
+
+            // 리스트 홀수번째 아이템 배경설정
+            if (position % 2 != 1) {
+                rowView.setBackgroundColor(Color.parseColor("#55CCDEF0"));
+                }
+
+            // 총 메뉴의 갯수와 총 가격 구하기
+            textViewTotalCount.setText("총 " + String.valueOf(menuName.size()) + "개 결제");
+            int totalPrice = 0;
+            for (int i = 0; i < menuPrice.size(); i++) {
+                totalPrice += menuPrice.get(i)*menuQuantity.get(i);
+            }
+            NumberFormat numberFormat = getNumberInstance(Locale.US);
+            String formattedTotalPrice = numberFormat.format(totalPrice) + "원";
+            textViewTotalPrice.setText(formattedTotalPrice);
+
+            // 리스트에 아이템이 0개가 되었을 때 0개라고 표시해준다.
+            if (menuName.size() == 0) {
+                textViewTotalCount.setText("총 0개 결제");
+                textViewTotalPrice.setText("0원");
+            }
+
+            textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+            buttonMinus = rowView.findViewById(R.id.buttonMinus);
+            buttonPlus = rowView.findViewById(R.id.buttonPlus);
+            buttonX = rowView.findViewById(R.id.buttonX);
+            buttonMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (menuQuantity.get(position) > 1) {
+                        menuQuantity.set(position, menuQuantity.get(position) - 1);
+                        textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+                        textViewPrice.setText(getPriceFormattedNumber(menuPrice, menuQuantity, position));
+                    }
+                    if (menuName.size() == 0) {
+                        textViewTotalCount.setText("총 0개 결제");
+                        textViewTotalPrice.setText("0원");
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+            buttonPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    menuQuantity.set(position, menuQuantity.get(position) + 1);
+                    textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+                    textViewPrice.setText(getPriceFormattedNumber(menuPrice, menuQuantity, position));
+                    notifyDataSetChanged();
+                }
+            });
+            buttonX.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 리스트에서 해당 아이템 삭제
+                    removeItem(position);
+                    if (menuName.size() == 0) {
+                        textViewTotalCount.setText("총 0개 결제");
+                        textViewTotalPrice.setText("0원");
+                    }
+                    // 어댑터 업데이트
+                     notifyDataSetChanged();
+                 }
+            });
+            buttonAC.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    while (!menuName.isEmpty()) {
+                        removeItem(0);
+                    }
+                    textViewTotalCount.setText("총 0개 결제");
+                    textViewTotalPrice.setText("0원");
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            return rowView;
+        }
+
+        private String getPriceFormattedNumber(ArrayList<Integer> Price, ArrayList<Integer> Quantity, int itemIndex) {
+            NumberFormat numberFormat = getNumberInstance(Locale.US);
+            String formattedPrice = numberFormat.format(Price.get(itemIndex)*Quantity.get(itemIndex)) + "원";
+            return formattedPrice;
+        }
+
+        private void removeItem(int itemIndex) {
+            menuName.remove(itemIndex);
+            menuQuantity.remove(itemIndex);
+            menuPrice.remove(itemIndex);
+            menuOption1.remove(itemIndex);
+            menuOption2.remove(itemIndex);
+            menuOption3.remove(itemIndex);
+        }
+    }
+}
 ```
 장바구니 배열에 메뉴 옵션 항목 4가지를 추가하였다.  
 장바구니에 아이템을 추가하는 버튼에 옵션 선택 화면을 연결하였다.  
 액티비티로 전환하지 않고, Dialog로 커스텀 대화상자를 띄워 옵션 선택 화면 레이아웃을 연결하였다.  
 옵션 버튼을 선택했을 시, 버튼 스타일이 적용되지 않는 문제가 생겼는데 당장 해결하지는 못하였고 일단 넘어가고 다른 기능들부터 구현을 하였다.  
-어떤 버튼을 눌렀는지는 알 수 없지만, 옵션 4가지를 모두 선택하면 선택완료 버튼이 활성화되고 나머지 코드들이 제대로 작동하는 것을 확인하였다.
+어떤 옵션을 선택는지는 알 수 없지만, 옵션 4가지를 모두 선택하면 선택완료 버튼이 활성화되고 나머지 코드들이 제대로 작동하는 것을 확인하였다.  
+장바구니에 아이템을 추가하는 버튼을 4개로 늘리고, 각 버튼마다 다른 아이템이 추가되도록 구현해보았다.  
+옵션을 선택할 때마다 가격이 갱신되고, 메뉴 수량 변경, 메뉴 추가, 삭제를 했을 때 총 메뉴의 갯수와 총 가격이 갱신되도록 하였다.
 
 <br/><br/>
 
-# 12/31(화)
+# 1/2(목)
 ## MenuActivity.java
 ```
 
