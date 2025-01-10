@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 먼저 간단하게 메인화면을 만들었다.  
-"매장" 또는 "포장"을 선택하면 다음 화면으로 넘어가서 메뉴를 고르는 화면이 나온다.  
+인텐트를 이용하여 "매장" 또는 "포장"을 선택하면 다음 화면으로 넘어가서 메뉴를 고르는 화면이 나오도록 하였다.  
 두 버튼 모두 아직까지는 다음 화면으로 넘어가는 기능만 구현했다.  
 
 <br/><br/>
@@ -118,7 +118,17 @@ public class MenuActivity extends AppCompatActivity {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView= inflater.inflate(R.layout.activity_listitem, null, true);
 
+            textViewMenuName.setText(menuName.get(position));
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+            String formattedPrice =             numberFormat.format(menuPrice.get(position)*menuQuantity.get(position)) + "원";
+            textViewPrice.setText(formattedPrice);
             return rowView;
         }
     }
 ```
+어댑터를 생성하여 배열을 리스트뷰에 연결하였다.
+배열에는 먼저 임의로 커피 이름과 가격을 넣어놓고, 리스트뷰가 잘 만들어지는지 확인하였다.
+
+<br/><br/>
+
+## 12/26(목)
