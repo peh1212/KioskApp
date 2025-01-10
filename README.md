@@ -135,7 +135,42 @@ public class MenuActivity extends AppCompatActivity {
 ## 12/26(목)
 # MenuActivity
 ```
+public class CustomList extends ArrayAdapter<String> {
 
+        ...
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+
+            ...
+
+            textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+            buttonMinus = rowView.findViewById(R.id.buttonMinus);
+            buttonPlus = rowView.findViewById(R.id.buttonPlus);
+            buttonMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (menuQuantity.get(position) > 0) {
+                        menuQuantity.set(position, menuQuantity.get(position) - 1);
+                        textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+                        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+                        String formattedPrice = numberFormat.format(menuPrice.get(position)*menuQuantity.get(position)) + "원";
+                        textViewPrice.setText(formattedPrice);
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+            buttonPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    menuQuantity.set(position, menuQuantity.get(position) + 1);
+                    textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+                    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+                    String formattedPrice = numberFormat.format(menuPrice.get(position)*menuQuantity.get(position)) + "원";
+                    textViewPrice.setText(formattedPrice);
+                    notifyDataSetChanged();
+                }
+            });
 ```
 장바구니에 들어있는 메뉴의 갯수를 조절하는 버튼(+/-)의 기능을 구현하였다.  
 +버튼과 -버튼을 각각 이벤트리스너에 등록하여 수량이 수정되도록 하였다.  
