@@ -348,7 +348,7 @@ public class MenuActivity extends AppCompatActivity {
 <br/><br/>
 
 # 12/30(월)
-다른 팀원들이 작업한 코드들과 연결을 시도해보았다.
+팀원들이 작업한 코드와 연결을 시도해보았다.
 ## activity_option.xml
 ![image](https://github.com/user-attachments/assets/e8e83fa7-e7be-4011-a3a8-2fe7957e7b89)  
 메뉴를 한 가지 선택했을 때 나오는 옵션을 선택할 수 있는 화면이다.  
