@@ -153,6 +153,9 @@ public class CustomList extends ArrayAdapter<String> {
 <br/><br/>
 
 ## 12/27(금)
+# activity_menu.xml
+![image](https://github.com/user-attachments/assets/4a7db33c-7322-488f-af99-7fd13f7aa0d0)  
+장바구니 리스트 우측에, 메뉴의 총 갯수와 가격, 전체삭제 버튼의 기능을 구현하였다.  
 
 # MenuActivity.java
 ```Java
@@ -265,12 +268,8 @@ public class MenuActivity extends AppCompatActivity {
 장바구니 리스트의 추가/삭제 버튼의 기능을 구현하였다.  
 임시로 버튼을 하나 만들어, 이 버튼을 눌렀을 때 장바구니 리스트에 "카페라떼"라는 메뉴가 하나씩 추가되도록 해보았다.  
 리스트 우측에 삭제(X) 버튼을 누르면 해당 리스트(배열)이 삭제되도록 하였다.  
-
-<br/><br/>
-
-# activity_menu.xml
-![image](https://github.com/user-attachments/assets/4a7db33c-7322-488f-af99-7fd13f7aa0d0)  
-장바구니 리스트 우측에, 메뉴의 총 갯수와 가격, 전체삭제 버튼의 기능을 구현하였다.  
+<br/>
+장바구니 우측에 장바구니 리스트의 총 갯수와 총 가격을 표시해주고, 전체삭제 기능을 구현하였다.  
 
 <br/><br/>
 
