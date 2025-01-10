@@ -1,9 +1,9 @@
-## 12/23(월)
+# 12/23(월)
 
-# activity_main.xml
+## activity_main.xml
 ![image](https://github.com/user-attachments/assets/8b44e6da-04dd-48d9-9263-d8de583177d0)
 
-# MainActivity.java
+## MainActivity.java
 ```Java
 public class MainActivity extends AppCompatActivity {
 
@@ -25,17 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
 <br/><br/>
 
-# activity_menu.xml
+## activity_menu.xml
 ![image](https://github.com/user-attachments/assets/9fa42486-02b4-4204-b5b0-40ed23d33794)   
-# activity_listitem.xml
+## activity_listitem.xml
 ![image](https://github.com/user-attachments/assets/0bbf66da-0c06-4341-aa94-4f386ad49b62)  
 메뉴 화면의 좌측 하단에 장바구니를 만들었다.  
 리스트뷰와 리스트뷰에 연결할 리스트 아이템을 디자인하였다.  
 
 <br/><br/>
 
-## 12/24(화)
-# MenuActivity.java
+# 12/24(화)
+## MenuActivity.java
 ```Java
 public class MenuActivity extends AppCompatActivity {
     ListView basketList;
@@ -104,8 +104,8 @@ public class MenuActivity extends AppCompatActivity {
 
 <br/><br/>
 
-## 12/26(목)
-# MenuActivity.java
+# 12/26(목)
+## MenuActivity.java
 ```Java
 
 ...
@@ -152,15 +152,14 @@ public class CustomList extends ArrayAdapter<String> {
 
 <br/><br/>
 
-## 12/27(금)
-# activity_menu.xml
+# 12/27(금)
+## activity_menu.xml
 ![image](https://github.com/user-attachments/assets/4a7db33c-7322-488f-af99-7fd13f7aa0d0)  
 장바구니 리스트 우측에, 메뉴의 총 갯수와 가격, 전체삭제 버튼의 기능을 구현하였다.  
 
-# MenuActivity.java
+## MenuActivity.java
 ```Java
 public class MenuActivity extends AppCompatActivity {
-
     ListView basketList;
     String[] menuNameArray = {
             "에스프레소",
@@ -194,7 +193,8 @@ public class MenuActivity extends AppCompatActivity {
     ArrayList<Integer> menuPrice;
     CustomList adapter;
 
-    ...
+    TextView textViewMenuName, textViewPrice, textViewTotalCount, textViewTotalPrice, textViewOption;
+    Button buttonMinus, buttonPlus, buttonX, buttonAC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,6 +225,10 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        buttonAC = findViewById(R.id.buttonAC);
+        textViewTotalCount = findViewById(R.id.textViewTotalCount);
+        textViewTotalPrice = findViewById(R.id.textViewTotalPrice);
+
         basketList=(ListView)findViewById(R.id.basketList);
         basketList.setAdapter(adapter);
     }
@@ -241,16 +245,62 @@ public class MenuActivity extends AppCompatActivity {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView= inflater.inflate(R.layout.activity_listitem, null, true);
 
-            ...
+            final TextView textViewMenuName = rowView.findViewById(R.id.textViewMenuName);
+            final TextView textViewOption = rowView.findViewById(R.id.textViewOption);
+            final TextView textViewPrice = rowView.findViewById(R.id.textViewPrice);
+            final TextView textViewQuantity = rowView.findViewById(R.id.textViewQuantity);
+            textViewMenuName.setText(menuName.get(position));
+            textViewPrice.setText(getPriceFormattedNumber(menuPrice, menuQuantity, position));
 
+            // 총 메뉴의 갯수와 총 가격 구하기
+            textViewTotalCount.setText("총 " + String.valueOf(menuName.size()) + "개 결제");
+            int totalPrice = 0;
+            for (int i = 0; i < menuPrice.size(); i++) {
+                totalPrice += menuPrice.get(i)*menuQuantity.get(i);
+            }
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+            String formattedTotalPrice = numberFormat.format(totalPrice) + "원";
+            textViewTotalPrice.setText(formattedTotalPrice);
+
+            // 리스트에 아이템이 0개가 되었을 때 0개라고 표시해준다.
+            if (menuName.size() == 0) {
+                textViewTotalCount.setText("총 0개 결제");
+                textViewTotalPrice.setText("0원");
+            }
+
+            textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+            buttonMinus = rowView.findViewById(R.id.buttonMinus);
+            buttonPlus = rowView.findViewById(R.id.buttonPlus);
             buttonX = rowView.findViewById(R.id.buttonX);
+            buttonMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (menuQuantity.get(position) > 0) {
+                        menuQuantity.set(position, menuQuantity.get(position) - 1);
+                        textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+                        textViewPrice.setText(getPriceFormattedNumber(menuPrice, menuQuantity, position));
+                    }
+                    if (menuName.size() == 0) {
+                        textViewTotalCount.setText("총 0개 결제");
+                        textViewTotalPrice.setText("0원");
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+            buttonPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    menuQuantity.set(position, menuQuantity.get(position) + 1);
+                    textViewQuantity.setText(String.valueOf(menuQuantity.get(position)));
+                    textViewPrice.setText(getPriceFormattedNumber(menuPrice, menuQuantity, position));
+                    notifyDataSetChanged();
+                }
+            });
             buttonX.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 리스트에서 해당 아이템 삭제
-                    menuName.remove(position);
-                    menuQuantity.remove(position);
-                    menuPrice.remove(position);
+                    removeItem(position);
                     if (menuName.size() == 0) {
                         textViewTotalCount.setText("총 0개 결제");
                         textViewTotalPrice.setText("0원");
@@ -259,9 +309,33 @@ public class MenuActivity extends AppCompatActivity {
                      notifyDataSetChanged();
                  }
             });
+            buttonAC.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    while (!menuName.isEmpty()) {
+                        removeItem(0);
+                    }
+                    textViewTotalCount.setText("총 0개 결제");
+                    textViewTotalPrice.setText("0원");
+                    adapter.notifyDataSetChanged();
+                }
+            });
             return rowView;
         }
+
+        private String getPriceFormattedNumber(ArrayList<Integer> Price, ArrayList<Integer> Quantity, int itemIndex) {
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+            String formattedPrice = numberFormat.format(Price.get(itemIndex)*Quantity.get(itemIndex)) + "원";
+            return formattedPrice;
+        }
+
+        private void removeItem(int itemIndex) {
+            menuName.remove(itemIndex);
+            menuQuantity.remove(itemIndex);
+            menuPrice.remove(itemIndex);
+        }
     }
+
 }
 ```
 장바구니 리스트를 동적으로 관리하기 위하여 배열을 ArrayList로 만들었다.  
@@ -273,8 +347,8 @@ public class MenuActivity extends AppCompatActivity {
 
 <br/><br/>
 
-## 12/30(월)
-# MenuActivity.java
+# 12/30(월)
+## MenuActivity.java
 ```
 
 ```
@@ -285,8 +359,8 @@ public class MenuActivity extends AppCompatActivity {
 
 <br/><br/>
 
-## 12/31(화)
-# MenuActivity.java
+# 12/31(화)
+## MenuActivity.java
 ```
 
 ```
