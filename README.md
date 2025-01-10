@@ -1213,9 +1213,11 @@ public class MenuActivity extends AppCompatActivity {
 }
 ```
 옵션 버튼을 눌렀을 시 버튼 스타일이 적용되지 않는 문제도 해결하였다.  
-GPT와 Copilot에게 계속 물어보니 버튼 뷰를 제대로 참조하지 못해서 그렇다고 해서, 메뉴 추가 버튼을 눌렀을 때 뜨는 Dialog 안에서 옵션 선택들을 처리하도록 OnOptionClicked 코드를 buttonAddItem 안으로 옮긴 후 정리하였다.  
+GPT에게 물어보니 버튼 뷰를 제대로 참조하지 못해서 생기는 문제라고 해서, 메뉴 추가 버튼을 눌렀을 때 뜨는 Dialog 안에서 옵션 선택들을 처리하도록 OnOptionClicked 코드를 buttonAddItem 안으로 옮긴 후 정리하였다.  
 
 <br/><br/>
 
 # 1/6(월)~1/7(화)
-메뉴 화면의 탭 레이아웃과 합쳤다.
+메뉴 화면에 탭 레이아웃과 뷰 페이저와 합쳤다.  
+## activity_menu.xml
+![image](https://github.com/user-attachments/assets/4e1d7dfd-7bc2-4ce6-9e56-f13400ec39e9)  
