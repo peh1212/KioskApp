@@ -1223,5 +1223,296 @@ GPT에게 물어보니 버튼 뷰를 제대로 참조하지 못해서 생기는 
 ![image](https://github.com/user-attachments/assets/4e1d7dfd-7bc2-4ce6-9e56-f13400ec39e9)  
 ## fragment_2.xml
 ![image](https://github.com/user-attachments/assets/5be21d5c-652b-454f-94cf-1a90fcc313d0)  
-탭 레이아웃으로 5개의 탭(추천, 커피, 논커피, 스무디, 주스)을 만들고, 각각의 탭에 프래그먼트(총 5개)를 뷰 페이저로 연결하였다.  
+탭 레이아웃으로 5개의 탭(추천, 커피, 논커피, 스무디, 주스)을 만들고, 각각의 탭에 프래그먼트(1~5, 총 5개)를 뷰 페이저로 연결하였다.  
+## FragmentAdapter.Java
+```Java
+public class FragmentAdapter extends FragmentStateAdapter {
 
+    public FragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
+    }
+
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+        switch (position) {
+            case 0: return new Fragment1();
+            case 1: return new Fragment2();
+            case 2: return new Fragment3();
+            case 3: return new Fragment4();
+            case 4: return new Fragment5();
+            default: return new Fragment1();
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return 5; // 총 프래그먼트 수
+    }
+}
+```
+## Fragment2.Java
+```Java
+public class Fragment2 extends Fragment {
+    private MenuActivity activity;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MenuActivity) {
+            activity = (MenuActivity) context;
+        }
+    }
+
+    public static Fragment2 newInstance(MenuActivity activity) {
+        Fragment2 fragment = new Fragment2();
+        fragment.activity = activity;
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_2, container, false);
+
+
+        ImageButton buttonAddItem9 = view.findViewById(R.id.buttonAddItem9);
+        buttonAddItem9.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem10 = view.findViewById(R.id.buttonAddItem10);
+        buttonAddItem10.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem11 = view.findViewById(R.id.buttonAddItem11);
+        buttonAddItem11.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem12 = view.findViewById(R.id.buttonAddItem12);
+        buttonAddItem12.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem13 = view.findViewById(R.id.buttonAddItem13);
+        buttonAddItem13.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem14 = view.findViewById(R.id.buttonAddItem14);
+        buttonAddItem14.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem15 = view.findViewById(R.id.buttonAddItem15);
+        buttonAddItem15.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        ImageButton buttonAddItem16 = view.findViewById(R.id.buttonAddItem16);
+        buttonAddItem16.setOnClickListener(v -> {
+            if (getActivity() instanceof MenuActivity) {
+                ((MenuActivity) getActivity()).buttonAddItem(v);
+            }
+        });
+
+        return view;
+    }
+}
+```
+## MenuActivity.Java
+```Java
+public class MenuActivity extends AppCompatActivity {
+
+    ...
+
+    ViewPager2 viewPager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu);
+
+        ...
+
+        // 탭레이아웃+뷰페이저
+        viewPager = findViewById(R.id.viewpager);
+        FragmentStateAdapter fragmentAdapter = new FragmentAdapter(this);
+        viewPager.setAdapter(fragmentAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.Taplayout1);
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            // 탭 제목 설정
+            String[] titles = {"추천", "커피", "논커피", "스무디", "주스"};
+            tab.setText(titles[position]);
+        }).attach();
+
+        ImageButton homeButton = findViewById(R.id.bt1);
+        homeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    // 메뉴를 하나 골랐을 때 나타나는 옵션선택창
+    public void buttonAddItem(View v) {
+        // 커스텀 대화메뉴를 생성하여 띄운다.
+        Dialog optionDialog = new Dialog(MenuActivity.this);
+        optionDialog.setContentView(R.layout.activity_option);
+        optionDialog.show();
+        resetSelections();
+
+        ...
+
+        // 선택한 메뉴를 배열에 저장하고 화면에 보여준다.
+        buttonAddItem1 = findViewById(R.id.buttonAddItem1);
+        buttonAddItem2 = findViewById(R.id.buttonAddItem2);
+        buttonAddItem3 = findViewById(R.id.buttonAddItem3);
+        buttonAddItem4 = findViewById(R.id.buttonAddItem4);
+        buttonAddItem5 = findViewById(R.id.buttonAddItem5);
+        buttonAddItem6 = findViewById(R.id.buttonAddItem6);
+        buttonAddItem7 = findViewById(R.id.buttonAddItem7);
+        buttonAddItem8 = findViewById(R.id.buttonAddItem8);
+
+        buttonAddItem9 = findViewById(R.id.buttonAddItem9);
+        buttonAddItem10 = findViewById(R.id.buttonAddItem10);
+        buttonAddItem11 = findViewById(R.id.buttonAddItem11);
+        buttonAddItem12 = findViewById(R.id.buttonAddItem12);
+        buttonAddItem13 = findViewById(R.id.buttonAddItem13);
+        buttonAddItem14 = findViewById(R.id.buttonAddItem14);
+        buttonAddItem15 = findViewById(R.id.buttonAddItem15);
+        buttonAddItem16 = findViewById(R.id.buttonAddItem16);
+
+        buttonAddItem17 = findViewById(R.id.buttonAddItem17);
+        buttonAddItem18 = findViewById(R.id.buttonAddItem18);
+        buttonAddItem19 = findViewById(R.id.buttonAddItem19);
+        buttonAddItem20 = findViewById(R.id.buttonAddItem20);
+        buttonAddItem21 = findViewById(R.id.buttonAddItem21);
+        buttonAddItem22 = findViewById(R.id.buttonAddItem22);
+        buttonAddItem23 = findViewById(R.id.buttonAddItem23);
+        buttonAddItem24 = findViewById(R.id.buttonAddItem24);
+
+        if (v == buttonAddItem1 && buttonAddItem1 != null) {
+            menuName.add("피넛츠 카페라떼");
+            menuPrice.add(6000);
+            coffeeInfo.add("비건음료 아몬드 브리즈에 땅콩, 호두, 헤이즐넛이 만나 부드럽고 고소한 풍미를 느낄 수 있는 겨울시즌 한정라떼");
+        } else if (v == buttonAddItem2 && buttonAddItem2 != null) {
+            menuName.add("피넛츠 카페라떼");
+            menuPrice.add(6000);
+            coffeeInfo.add("비건 음료 아몬드브리즈에 땅콩, 호두, 헤이즐넛이 만나 부드럽고 고소한 풍미를 느낄 수 있는 겨울시즌 한정 라떼");
+        } else if (v == buttonAddItem3 && buttonAddItem3 != null) {
+            menuName.add("초코 눈송이 피스타치오 프라페");
+            menuPrice.add(7000);
+            coffeeInfo.add("피스타치오 나무 위에 초코 눈송이가 와르르! 와작와작! 초콜릿을 깨서 고소한 피스타치오 프라페와 섞은 후 식감 좋은 초콜릿 아몬드와 함께 즐기는 달콤하고 고소한 피스타치오 프라페");
+        } else if (v == buttonAddItem4 && buttonAddItem4 != null) {
+            menuName.add("피스타치오 포레스트 라떼");
+            menuPrice.add(7000);
+            coffeeInfo.add("피스타치오 숲 속 산타가 좋아하는 은은한 향의 피스타치오 라떼에 쌉싸름한 블렌딩 커피를 추가해 더욱 고소하게 즐길 수 있는 따뜻한 라떼");
+        } else if (v == buttonAddItem5 && buttonAddItem5 != null) {
+            menuName.add("빨간 코 루돌프의 상큼 리치티");
+            menuPrice.add(6500);
+            coffeeInfo.add("하얀 눈 속을 달리는 빨간 코 루돌프와 닮은 리치티. 리치, 라임, 망고스틴 베이스에 레드 커런트, 로즈마리를 더한 상큼한 과일티");
+        } else if (v == buttonAddItem6 && buttonAddItem6 != null) {
+            menuName.add("산타 코코넛 애플티 라떼");
+            menuPrice.add(6500);
+            coffeeInfo.add("산타클로스의 빨간 모자와 하얀 수염을 닮은 겨울 티 라떼. 달콤하고 부드러운 코코넛과 상큼한 파인애플 베이스에 달콤하고 향긋한 애플티를 더한 티라떼");
+        } else if (v == buttonAddItem7 && buttonAddItem7 != null) {
+            menuName.add("하츄핑 딸기 밀크쉐이크");
+            menuPrice.add(7500);
+            coffeeInfo.add("하츄핑은 딸기를 좋아해! 내사랑을 듬뿍듬뿍 줄게~츄! 딸기가득 부드러운 밀크쉐이크 위에 귀여운 초코 하츄핑이 뿅!");
+        } else if (v == buttonAddItem8 && buttonAddItem8 != null) {
+            menuName.add("빤짝핑 망고 밀크쉐이크");
+            menuPrice.add(7500);
+            coffeeInfo.add("빤짝핑은 망고를 좋아해! 어떻게 알았냐면~ 빤짝하고 빛났어 망고가득 부드러운 밀크쉐이크 위에 귀여운 초코 빤짝핑이 뿅!");
+        } else if (v == buttonAddItem9 && buttonAddItem9 != null) {
+            menuName.add("피넛츠 카페라떼");
+            menuPrice.add(6000);
+            coffeeInfo.add("비건음료 아몬드 브리즈에 땅콩, 호두, 헤이즐넛이 만나 부드럽고 고소한 풍미를 느낄 수 있는 겨울시즌 한정라떼");
+        } else if (v == buttonAddItem10 && buttonAddItem10 != null) {
+            menuName.add("피넛츠 카페");
+            menuPrice.add(6000);
+            coffeeInfo.add("비건 음료 아몬드브리즈에 땅콩, 호두, 헤이즐넛이 만나 부드럽고 고소한 풍미를 느낄 수 있는 겨울시즌 한정 라떼");
+        } else if (v == buttonAddItem11 && buttonAddItem11 != null) {
+            menuName.add("초코 눈송이 피스타치오 프라페");
+            menuPrice.add(7000);
+            coffeeInfo.add("피스타치오 나무 위에 초코 눈송이가 와르르! 와작와작! 초콜릿을 깨서 고소한 피스타치오 프라페와 섞은 후 식감 좋은 초콜릿 아몬드와 함께 즐기는 달콤하고 고소한 피스타치오 프라페");
+        } else if (v == buttonAddItem12 && buttonAddItem12 != null) {
+            menuName.add("피스타치오 포레스트 라떼");
+            menuPrice.add(7000);
+            coffeeInfo.add("피스타치오 숲 속 산타가 좋아하는 은은한 향의 피스타치오 라떼에 쌉싸름한 블렌딩 커피를 추가해 더욱 고소하게 즐길 수 있는 따뜻한 라떼");
+        } else if (v == buttonAddItem13 && buttonAddItem13 != null) {
+            menuName.add("빨간 코 루돌프의 상큼 리치티");
+            menuPrice.add(6500);
+            coffeeInfo.add("하얀 눈 속을 달리는 빨간 코 루돌프와 닮은 리치티. 리치, 라임, 망고스틴 베이스에 레드 커런트, 로즈마리를 더한 상큼한 과일티");
+        } else if (v == buttonAddItem14 && buttonAddItem14 != null) {
+            menuName.add("산타 코코넛 애플티 라떼");
+            menuPrice.add(6500);
+            coffeeInfo.add("산타클로스의 빨간 모자와 하얀 수염을 닮은 겨울 티 라떼. 달콤하고 부드러운 코코넛과 상큼한 파인애플 베이스에 달콤하고 향긋한 애플티를 더한 티라떼");
+        } else if (v == buttonAddItem15 && buttonAddItem15 != null) {
+            menuName.add("하츄핑 딸기 밀크쉐이크");
+            menuPrice.add(7500);
+            coffeeInfo.add("하츄핑은 딸기를 좋아해! 내사랑을 듬뿍듬뿍 줄게~츄! 딸기가득 부드러운 밀크쉐이크 위에 귀여운 초코 하츄핑이 뿅!");
+        } else if (v == buttonAddItem16 && buttonAddItem16 != null) {
+            menuName.add("빤짝핑 망고 밀크쉐이크");
+            menuPrice.add(7500);
+            coffeeInfo.add("빤짝핑은 망고를 좋아해! 어떻게 알았냐면~ 빤짝하고 빛났어 망고가득 부드러운 밀크쉐이크 위에 귀여운 초코 빤짝핑이 뿅!");
+        } else if (v == buttonAddItem17 && buttonAddItem17 != null) {
+            menuName.add("디카페인 에스프레소");
+            menuPrice.add(4500);
+            coffeeInfo.add("디카페인으로 만나는 메가MGC커피 에스프레소");
+        } else if (v == buttonAddItem18 && buttonAddItem18 != null) {
+            menuName.add("디카페인 아메리카노");
+            menuPrice.add(5000);
+            coffeeInfo.add("향과 풍미 그대로 카페인만을 낮춰 민감한 분들도 안심하고 매일매일 즐길 수 있는 디카페인 커피");
+        } else if (v == buttonAddItem19 && buttonAddItem19 != null) {
+            menuName.add("디카페인 꿀아메리카노");
+            menuPrice.add(5500);
+            coffeeInfo.add("디카페인 아메리카노의 묵직한 바디감에 달콤한 사양벌꿀이 소프트하게 어우러진 커피.");
+        } else if (v == buttonAddItem20 && buttonAddItem20 != null) {
+            menuName.add("디카페인 카페라떼");
+            menuPrice.add(5500);
+            coffeeInfo.add("디카페인 에스프레소와 부드러운 우유가 어우러져 고소한 풍미를 완성한 라떼.");
+        } else if (v == buttonAddItem21 && buttonAddItem21 != null) {
+            menuName.add("디카페인 카푸치노");
+            menuPrice.add(6000);
+            coffeeInfo.add("디카페인 에스프레소와 부드러운 우유가 어우러져 고소한 풍미를 완성한 카푸치노.");
+        } else if (v == buttonAddItem22 && buttonAddItem22 != null) {
+            menuName.add("디카페인 바닐라라떼");
+            menuPrice.add(6000);
+            coffeeInfo.add("디카페인으로 즐기는 바닐라의 짙은 향과 풍부한 폼 밀크의 조화가 인상적인 달콤한 라떼.");
+        } else if (v == buttonAddItem23 && buttonAddItem23 != null) {
+            menuName.add("디카페인 헤이즐넛 라떼");
+            menuPrice.add(6000);
+            coffeeInfo.add("부드러운 카페라떼에 헤이즐넛의 풍부한 향과 달콤함을 담아 향긋하게 즐길 수 있는 디카페인 라떼.");
+        } else if (v == buttonAddItem24 && buttonAddItem24 != null) {
+            menuName.add("디카페인 카라멜마끼아또");
+            menuPrice.add(6500);
+            coffeeInfo.add("폼 밀크 속에 진한 디카페인 에스프레소와 달콤한 카라멜을 가미해 부드럽게 즐기는 커피");
+        }
+        
+        ...
+        
+    }
+}
+```
+메뉴 액티비티의 onCreate에서 탭 레이아웃과 뷰 페이저를 연결하였다.  
+각 프래그먼트에서 메뉴 버튼을 하나 클릭하면, MenuActivity에서 구현해놓은 메뉴 추가 버튼(buttonAddItem)을 호출하여, 프래그먼트에서 선택한 버튼 Id에 맞는 메뉴 이름과 가격과 설명이 리스트에 추가된다.  
