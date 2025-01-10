@@ -134,6 +134,9 @@ public class MenuActivity extends AppCompatActivity {
 ## 12/26(목)
 # MenuActivity.java
 ```
+
+...
+
 public class CustomList extends ArrayAdapter<String> {
 
         ...
@@ -180,12 +183,145 @@ public class CustomList extends ArrayAdapter<String> {
 
 # MenuActivity.java
 ```
+public class MenuActivity extends AppCompatActivity {
 
+    ListView basketList;
+    String[] menuNameArray = {
+            "에스프레소",
+            "카페라떼",
+            "블루레몬에이드",
+            "크림치즈베이글",
+            "크로와상",
+            "라벤더카페브레베",
+            "바닐라빈라떼",
+    };
+    String[] menuOption1Array = {
+            "ICE",
+            "ICE",
+            "HOT",
+            "ICE",
+            "HOT",
+            "HOT",
+            "ICE",
+    };
+    String[] menuOption2Array = {
+            "바닐라시럽토핑",
+            "바닐라시럽토핑",
+            "선택없음",
+            "헤이즐넛시럽토핑",
+            "선택없음",
+            "헤이즐넛시럽토핑",
+            "바닐라시럽토핑",
+    };
+    String[] menuOption3Array = {
+            "얼음 많이",
+            "얼음 적게",
+            "얼음 적게",
+            "얼음 많이",
+            "얼음 조금",
+            "얼음 없이",
+            "얼음 없이",
+    };
+    int[] menuQuantityArray = {
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+    };
+    int[] menuPriceArray = {
+            7600,
+            4800,
+            6000,
+            3800,
+            3800,
+            3000,
+            3000
+    };
+    ArrayList<String> menuName;
+    ArrayList<Integer> menuQuantity;
+    ArrayList<Integer> menuPrice;
+    CustomList adapter;
+
+    ...
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu);
+
+        // 아이템을 동적으로 관리하기 위하여 배열을 어레이리스트로 만든다.
+        menuName = new ArrayList<>(Arrays.asList(menuNameArray));
+        menuQuantity = new ArrayList<>();
+        for (int quantity : menuQuantityArray) {
+            menuQuantity.add(quantity);
+        }
+        menuPrice = new ArrayList<>();
+        for (int price : menuPriceArray) {
+            menuPrice.add(price);
+        }
+        adapter = new CustomList(MenuActivity.this);
+
+        // 메뉴를 눌렀을 때 배열에 아이템 추가하기
+        Button buttonAddItem = findViewById(R.id.buttonAddItem);
+        buttonAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuName.add("카페라떼");
+                menuQuantity.add(1);
+                menuPrice.add(4800);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        basketList=(ListView)findViewById(R.id.basketList);
+        basketList.setAdapter(adapter);
+    }
+
+    public class CustomList extends ArrayAdapter<String> {
+        private final Activity context;
+        public CustomList(Activity context) {
+            super(context, R.layout.activity_listitem, menuName);
+            this.context = context;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView= inflater.inflate(R.layout.activity_listitem, null, true);
+
+            ...
+
+            buttonX = rowView.findViewById(R.id.buttonX);
+            buttonX.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 리스트에서 해당 아이템 삭제
+                    menuName.remove(position);
+                    menuQuantity.remove(position);
+                    menuPrice.remove(position);
+                    menuOption1.remove(position);
+                    menuOption2.remove(position);
+                    menuOption3.remove(position);
+                    if (menuName.size() == 0) {
+                        textViewTotalCount.setText("총 0개 결제");
+                        textViewTotalPrice.setText("0원");
+                    }
+                    // 어댑터 업데이트
+                     notifyDataSetChanged();
+                 }
+            });
+            return rowView;
+        }
+    }
+}
 ```
-장바구니 리스트의 추가/삭제 버튼의 기능을 구현하였다.  
 장바구니 리스트를 동적으로 관리하기 위하여 배열을 ArrayList로 만들었다.  
+장바구니 리스트의 추가/삭제 버튼의 기능을 구현하였다.  
 임시로 버튼을 하나 만들어, 이 버튼을 눌렀을 때 장바구니 리스트에 "카페라떼"라는 메뉴가 하나씩 추가되도록 해보았다.  
-리스트 우측에 삭제 버튼을 누르면 해당 리스트(배열)이 삭제되도록 하였다.  
+리스트 우측에 삭제(X) 버튼을 누르면 해당 리스트(배열)이 삭제되도록 하였다.  
 
 <br/><br/>
 
