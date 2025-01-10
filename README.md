@@ -4,7 +4,7 @@
 ![image](https://github.com/user-attachments/assets/8b44e6da-04dd-48d9-9263-d8de583177d0)
 
 # MainActivity.java
-```
+```Java
 public class MainActivity extends AppCompatActivity {
 
     @Override
