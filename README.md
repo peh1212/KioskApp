@@ -1221,3 +1221,7 @@ GPT에게 물어보니 버튼 뷰를 제대로 참조하지 못해서 생기는 
 메뉴 화면에 탭 레이아웃과 뷰 페이저와 합쳤다.  
 ## activity_menu.xml
 ![image](https://github.com/user-attachments/assets/4e1d7dfd-7bc2-4ce6-9e56-f13400ec39e9)  
+## fragment_2.xml
+![image](https://github.com/user-attachments/assets/5be21d5c-652b-454f-94cf-1a90fcc313d0)  
+탭 레이아웃으로 5개의 탭(추천, 커피, 논커피, 스무디, 주스)을 만들고, 각각의 탭에 프래그먼트(총 5개)를 뷰 페이저로 연결하였다.  
+
