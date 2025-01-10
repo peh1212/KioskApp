@@ -348,6 +348,14 @@ public class MenuActivity extends AppCompatActivity {
 <br/><br/>
 
 # 12/30(월)
+다른 팀원들이 작업한 코드들과 연결을 시도해보았다.
+## activity_option.xml
+![image](https://github.com/user-attachments/assets/e8e83fa7-e7be-4011-a3a8-2fe7957e7b89)  
+메뉴를 한 가지 선택했을 때 나오는 옵션을 선택할 수 있는 화면이다.  
+옵션이 4가지(핫/아이스, 사이즈, 시럽, 얼음양)가 있고, 옵션 4가지를 모두 선택하면 선택완료 버튼이 활성화된다.  
+선택된 옵션에는 버튼에 청색 테두리가 생기도록 코드를 구현하였다.  
+이 청색 테두리 스타일은 @drawable/button_border_selected.xml에 작성하였다.  
+
 ## MenuActivity.java
 ```
 
