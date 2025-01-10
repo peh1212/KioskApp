@@ -813,7 +813,16 @@ public class MenuActivity extends AppCompatActivity {
 
 <br/><br/>
 
-# 1/2(목)
+# 1/2(목)~1/3(금)
+## activity_payment.xml
+![image](https://github.com/user-attachments/assets/7c179fd6-9765-47ef-a73b-4b04ed1aa3ac)  
+## activity_paymentlist.xml
+![image](https://github.com/user-attachments/assets/d1571f9b-1d29-40b3-ae91-04a3922ab4b1)  
+결제 화면과 합쳤다.  
+## dialog_easy_payment.xml
+![image](https://github.com/user-attachments/assets/51e399e1-cf9d-4b3d-9649-fab8d745e96b)  
+
+
 ## MenuActivity.java
 ```
 
