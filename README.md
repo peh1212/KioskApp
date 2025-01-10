@@ -1,4 +1,4 @@
-## 12/23(목)
+## 12/23(월)
 
 # activity_main.xml
 ![image](https://github.com/user-attachments/assets/8b44e6da-04dd-48d9-9263-d8de583177d0)
@@ -32,3 +32,93 @@ public class MainActivity extends AppCompatActivity {
 ![image](https://github.com/user-attachments/assets/0bbf66da-0c06-4341-aa94-4f386ad49b62)  
 메뉴 화면의 좌측 하단에 장바구니를 만들었다.  
 리스트뷰와 리스트뷰에 연결할 리스트 아이템을 디자인했다.  
+
+<br/><br/>
+
+## 12/24(화)
+# MenuActivity
+```
+public class MenuActivity extends AppCompatActivity {
+    ListView basketList;
+    String[] menuNameArray = {
+            "에스프레소",
+            "카페라떼",
+            "블루레몬에이드",
+            "크림치즈베이글",
+            "크로와상",
+            "라벤더카페브레베",
+            "바닐라빈라떼",
+    };
+    String[] menuOption1Array = {
+            "ICE",
+            "ICE",
+            "HOT",
+            "ICE",
+            "HOT",
+            "HOT",
+            "ICE",
+    };
+    String[] menuOption2Array = {
+            "바닐라시럽토핑",
+            "바닐라시럽토핑",
+            "선택없음",
+            "헤이즐넛시럽토핑",
+            "선택없음",
+            "헤이즐넛시럽토핑",
+            "바닐라시럽토핑",
+    };
+    String[] menuOption3Array = {
+            "얼음 많이",
+            "얼음 적게",
+            "얼음 적게",
+            "얼음 많이",
+            "얼음 조금",
+            "얼음 없이",
+            "얼음 없이",
+    };
+    int[] menuQuantityArray = {
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+    };
+    int[] menuPriceArray = {
+            7600,
+            4800,
+            6000,
+            3800,
+            3800,
+            3000,
+            3000
+    };
+    CustomList adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu);
+        adapter = new CustomList(MenuActivity.this);
+
+        basketList=(ListView)findViewById(R.id.basketList);
+        basketList.setAdapter(adapter);
+    }
+
+    public class CustomList extends ArrayAdapter<String> {
+        private final Activity context;
+        public CustomList(Activity context) {
+            super(context, R.layout.activity_listitem, menuNameArray);
+            this.context = context;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView= inflater.inflate(R.layout.activity_listitem, null, true);
+
+            return rowView;
+        }
+    }
+```
