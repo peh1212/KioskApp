@@ -191,7 +191,7 @@ public class CustomList extends ArrayAdapter<String> {
 <br/><br/>
 
 # activity_menu.xml
-![image](https://github.com/user-attachments/assets/4a7db33c-7322-488f-af99-7fd13f7aa0d0)
+![image](https://github.com/user-attachments/assets/4a7db33c-7322-488f-af99-7fd13f7aa0d0)  
 장바구니 리스트 우측에, 메뉴의 총 갯수와 가격, 전체삭제 버튼의 기능을 구현하였다.  
 
 <br/><br/>
