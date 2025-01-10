@@ -1516,5 +1516,6 @@ public class MenuActivity extends AppCompatActivity {
 ```
 메뉴 액티비티의 onCreate에서 탭 레이아웃과 뷰 페이저를 연결하였다.  
 각 프래그먼트에서 메뉴 버튼을 하나 클릭하면, MenuActivity에서 구현해놓은 메뉴 추가 버튼(buttonAddItem)을 호출하여, 프래그먼트에서 선택한 버튼 Id에 맞는 메뉴 이름과 가격과 설명이 리스트에 추가된다.  
+메뉴를 선택했을 때, 다른 프래그먼트에 있는 메뉴 버튼의 View는 null이 되어버리는 문제가 생겨서 if문의 각 조건에서 null체크를 추가하였다.  
 메뉴는 메가커피 홈페이지를 참고하였다.  
 (출처 https://mega-mgccoffee.com/)  
