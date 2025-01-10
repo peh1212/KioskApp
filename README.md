@@ -127,7 +127,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 ```
 어댑터를 생성하여 배열을 리스트뷰에 연결하였다.  
-어댑터는 CustomList 클래스로 정의하여 GetView의 동작을 Override해주었다.
+어댑터는 CustomList 클래스로 정의하여 GetView의 동작을 Override해주었다.  
 배열에는 먼저 임의로 커피 이름과 가격을 넣어놓고, 리스트뷰가 잘 만들어지는지 확인하였다.
 
 <br/><br/>
@@ -138,7 +138,7 @@ public class MenuActivity extends AppCompatActivity {
 
 ```
 장바구니에 들어있는 메뉴의 갯수를 조절하는 버튼(+/-)의 기능을 구현하였다.  
-+버튼과 -버튼을 각각 이벤트리스너에 등록하여 수량이 수정되도록 하였다.
++버튼과 -버튼을 각각 이벤트리스너에 등록하여 수량이 수정되도록 하였다.  
 
 <br/><br/>
 
