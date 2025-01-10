@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 ## 12/24(화)
 # MenuActivity.java
-```
+```Java
 public class MenuActivity extends AppCompatActivity {
     ListView basketList;
     String[] menuNameArray = {
@@ -106,7 +106,7 @@ public class MenuActivity extends AppCompatActivity {
 
 ## 12/26(목)
 # MenuActivity.java
-```
+```Java
 
 ...
 
@@ -155,7 +155,7 @@ public class CustomList extends ArrayAdapter<String> {
 ## 12/27(금)
 
 # MenuActivity.java
-```
+```Java
 public class MenuActivity extends AppCompatActivity {
 
     ListView basketList;
