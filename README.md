@@ -48,33 +48,6 @@ public class MenuActivity extends AppCompatActivity {
             "라벤더카페브레베",
             "바닐라빈라떼",
     };
-    String[] menuOption1Array = {
-            "ICE",
-            "ICE",
-            "HOT",
-            "ICE",
-            "HOT",
-            "HOT",
-            "ICE",
-    };
-    String[] menuOption2Array = {
-            "바닐라시럽토핑",
-            "바닐라시럽토핑",
-            "선택없음",
-            "헤이즐넛시럽토핑",
-            "선택없음",
-            "헤이즐넛시럽토핑",
-            "바닐라시럽토핑",
-    };
-    String[] menuOption3Array = {
-            "얼음 많이",
-            "얼음 적게",
-            "얼음 적게",
-            "얼음 많이",
-            "얼음 조금",
-            "얼음 없이",
-            "얼음 없이",
-    };
     int[] menuQuantityArray = {
             1,
             1,
@@ -195,33 +168,6 @@ public class MenuActivity extends AppCompatActivity {
             "라벤더카페브레베",
             "바닐라빈라떼",
     };
-    String[] menuOption1Array = {
-            "ICE",
-            "ICE",
-            "HOT",
-            "ICE",
-            "HOT",
-            "HOT",
-            "ICE",
-    };
-    String[] menuOption2Array = {
-            "바닐라시럽토핑",
-            "바닐라시럽토핑",
-            "선택없음",
-            "헤이즐넛시럽토핑",
-            "선택없음",
-            "헤이즐넛시럽토핑",
-            "바닐라시럽토핑",
-    };
-    String[] menuOption3Array = {
-            "얼음 많이",
-            "얼음 적게",
-            "얼음 적게",
-            "얼음 많이",
-            "얼음 조금",
-            "얼음 없이",
-            "얼음 없이",
-    };
     int[] menuQuantityArray = {
             1,
             1,
@@ -302,9 +248,6 @@ public class MenuActivity extends AppCompatActivity {
                     menuName.remove(position);
                     menuQuantity.remove(position);
                     menuPrice.remove(position);
-                    menuOption1.remove(position);
-                    menuOption2.remove(position);
-                    menuOption3.remove(position);
                     if (menuName.size() == 0) {
                         textViewTotalCount.setText("총 0개 결제");
                         textViewTotalPrice.setText("0원");
