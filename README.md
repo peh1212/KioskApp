@@ -344,6 +344,7 @@ public class MenuActivity extends AppCompatActivity {
 리스트 우측에 삭제(X) 버튼을 누르면 해당 리스트(배열)이 삭제되도록 하였다.  
 <br/>
 장바구니 우측에 장바구니 리스트의 총 갯수와 총 가격을 표시해주고, 전체삭제 기능을 구현하였다.  
+![kioskappgif1-min](https://github.com/user-attachments/assets/a9f65471-61dc-4c6e-b43e-8e826c2b2993)  
 
 <br/><br/>
 
