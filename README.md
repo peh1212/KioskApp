@@ -1520,3 +1520,12 @@ public class MenuActivity extends AppCompatActivity {
 메뉴를 선택했을 때, 다른 프래그먼트에 있는 메뉴 버튼의 View는 null이 되어버리는 문제가 생겨서 if문의 각 조건에서 null체크를 추가하였다.  
 메뉴는 메가커피 홈페이지를 참고하였다.  
 (출처 https://mega-mgccoffee.com/)  
+
+
+
+# 2/19(수)
+백엔드 개발 시작 <br>
+![image](https://github.com/user-attachments/assets/04758558-afd0-4451-b94b-f86167b307a2) <br>
+https://start.spring.io/ <br>
+start.spring.io에서 프로젝트를 생성한다. <br>
+dependency에는 `Lombok`, `Mustache`, `Spring Web`, `Spring Data JPA`, `PostgreSQL Dirver`를 추가한다. <br>
