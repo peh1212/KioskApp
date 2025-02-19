@@ -1545,7 +1545,7 @@ import lombok.ToString;
 public class CoffeeDTO {
     private Long id;
     private String coffeeName;
-    private String coffeePrice;
+    private Integer coffeePrice;
     private Integer coffeeQuantity;
     private String optionHot;
     private String optionSize;
@@ -1558,7 +1558,7 @@ public class CoffeeDTO {
     public CoffeeEntity toEntity() {
         return new CoffeeEntity(id, coffeeName, coffeeQuantity,
                 optionHot, optionSize, optionTopping, optionIce,
-                (addedPriceHot+addedPriceSize+addedPriceTopping)*coffeeQuantity);
+                (coffeePrice+addedPriceHot+addedPriceSize+addedPriceTopping)*coffeeQuantity);
     }
 }
 ```
