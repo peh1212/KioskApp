@@ -1524,8 +1524,96 @@ public class MenuActivity extends AppCompatActivity {
 
 
 # 2/19(수)
-백엔드 개발 시작 <br>
+백엔드 개발하기 <br>
 ![image](https://github.com/user-attachments/assets/04758558-afd0-4451-b94b-f86167b307a2) <br>
 https://start.spring.io/ <br>
 start.spring.io에서 프로젝트를 생성한다. <br>
 dependency에는 `Lombok`, `Mustache`, `Spring Web`, `Spring Data JPA`, `PostgreSQL Dirver`를 추가한다. <br>
+`IntelliJ IDEA`에서 프로젝트를 열어서 코드를 구현한다. <br>
+
+## CoffeeDTO.Java
+```Java
+package com.example.KioskApp.dto;
+
+import com.example.KioskApp.entity.CoffeeEntity;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
+@AllArgsConstructor
+@ToString
+public class CoffeeDTO {
+    private Long id;
+    private String coffeeName;
+    private String coffeePrice;
+    private Integer coffeeQuantity;
+    private String optionHot;
+    private String optionSize;
+    private String optionTopping;
+    private String optionIce;
+    private Integer addedPriceHot;
+    private Integer addedPriceSize;
+    private Integer addedPriceTopping;
+
+    public CoffeeEntity toEntity() {
+        return new CoffeeEntity(id, coffeeName, coffeeQuantity,
+                optionHot, optionSize, optionTopping, optionIce,
+                (addedPriceHot+addedPriceSize+addedPriceTopping)*coffeeQuantity);
+    }
+}
+```
+
+먼저, 장바구니에 담은 커피에 대한 정보를 전송하기 위한 DTO와 toEntity를 만들어준다. <br>
+
+## CoffeeEntity.Java
+```Java
+package com.example.KioskApp.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+public class CoffeeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
+    private String coffeeName;
+    @Column
+    private Integer coffeeQuantity;
+    @Column
+    private String optionHot;
+    @Column
+    private String optionSize;
+    @Column
+    private String optionTopping;
+    @Column
+    private String optionIce;
+    @Column
+    private Integer totalPrice;
+
+    public void patch(CoffeeEntity coffeeEntity) {
+        if (coffeeEntity.coffeeName != null)
+            this.coffeeName = coffeeEntity.coffeeName;
+        if (coffeeEntity.coffeeQuantity != null)
+            this.coffeeQuantity = coffeeEntity.coffeeQuantity;
+        if (coffeeEntity.optionHot != null)
+            this.optionHot = coffeeEntity.optionHot;
+        if (coffeeEntity.optionSize != null)
+            this.optionSize = coffeeEntity.optionSize;
+        if (coffeeEntity.optionTopping != null)
+            this.optionTopping = coffeeEntity.optionTopping;
+        if (coffeeEntity.optionIce != null)
+            this.optionIce = coffeeEntity.optionIce;
+        if (coffeeEntity.totalPrice != null)
+            this.totalPrice = coffeeEntity.totalPrice;
+    }
+}
+```
+
