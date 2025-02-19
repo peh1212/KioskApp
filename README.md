@@ -1521,6 +1521,7 @@ public class MenuActivity extends AppCompatActivity {
 메뉴는 메가커피 홈페이지를 참고하였다.  
 (출처 https://mega-mgccoffee.com/)  
 
+<br><br>
 
 
 # 2/19(수)
@@ -1529,7 +1530,7 @@ public class MenuActivity extends AppCompatActivity {
 https://start.spring.io/ <br>
 start.spring.io에서 프로젝트를 생성한다. <br>
 dependency에는 `Lombok`, `Mustache`, `Spring Web`, `Spring Data JPA`, `PostgreSQL Dirver`를 추가한다. <br>
-`IntelliJ IDEA`에서 프로젝트를 열어서 코드를 구현한다. <br>
+`IntelliJ IDEA`에서 프로젝트를 열어서 코드를 작성한다. <br>
 
 ## CoffeeDTO.Java
 ```Java
@@ -1562,7 +1563,7 @@ public class CoffeeDTO {
 }
 ```
 
-먼저, 장바구니에 담은 커피에 대한 정보를 전송하기 위한 DTO와 toEntity를 만들어준다. <br>
+장바구니에 담은 커피에 대한 정보를 전송하기 위한 DTO와 toEntity를 만들어준다. <br>
 
 ## CoffeeEntity.Java
 ```Java
@@ -1617,3 +1618,82 @@ public class CoffeeEntity {
 }
 ```
 
+커피 정보를 레파지토리에 저장하기 위한 Entity를 구현한다. <br>
+
+## CoffeeRepository.Java
+```Java
+package com.example.KioskApp.repository;
+
+import com.example.KioskApp.entity.CoffeeEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CoffeeRepository extends JpaRepository<CoffeeEntity, Long> {
+}
+```
+
+레파지토리 인터페이스를 구현한다. <br>
+
+## CoffeeService.Java
+```Java
+package com.example.KioskApp.service;
+
+import com.example.KioskApp.dto.CoffeeDTO;
+import com.example.KioskApp.entity.CoffeeEntity;
+import com.example.KioskApp.repository.CoffeeRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+public class CoffeeService {
+    @Autowired
+    private CoffeeRepository coffeeRepository;
+
+    // 모든 커피 엔티티 조회
+    public Iterable<CoffeeEntity> index() {
+        return coffeeRepository.findAll();
+    }
+
+    // 특정 커피 엔티티 조회
+    public CoffeeEntity show(Long id) {
+        return coffeeRepository.findById(id).orElse(null);
+    }
+
+    // 커피 엔티티 생성
+    public CoffeeEntity create(CoffeeDTO coffeeDTO) {
+        CoffeeEntity coffeeEntity = coffeeDTO.toEntity();
+        if (coffeeEntity.getId() != null) {
+            return null;
+        }
+        return coffeeRepository.save(coffeeEntity);
+    }
+
+    // 기존 커피 엔티티 수정
+    public CoffeeEntity update(Long id, CoffeeDTO coffeeDTO) {
+        CoffeeEntity coffeeEntity = coffeeDTO.toEntity();
+        log.info("id: {}, coffee: {}", id, coffeeEntity.toString());
+
+        CoffeeEntity target = coffeeRepository.findById(id).orElse(null);
+
+        if (target == null || id != coffeeEntity.getId()) {
+            log.info("잘못된 요청! id: {}, coffee: {}", id, coffeeEntity.toString());
+            return null;
+        }
+        target.patch(coffeeEntity);
+        return coffeeRepository.save(target);
+    }
+
+    // 특정 커피 엔티티 삭제
+    public CoffeeEntity delete(Long id) {
+        CoffeeEntity target = coffeeRepository.findById(id).orElse(null);
+        if (target == null) {
+            return null;
+        }
+        coffeeRepository.delete(target);
+        return target;
+    }
+}
+```
+
+Service를 생성하고 DTO를 처리하기 위한 로직을 구현한다. <br>
