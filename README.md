@@ -1697,3 +1697,72 @@ public class CoffeeService {
 ```
 
 Service를 생성하고 DTO를 처리하기 위한 로직을 구현한다. <br>
+
+## CoffeeApiController.Java
+```Java
+package com.example.KioskApp.api;
+
+import com.example.KioskApp.dto.CoffeeDTO;
+import com.example.KioskApp.entity.CoffeeEntity;
+import com.example.KioskApp.service.CoffeeService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@Slf4j
+@RestController
+public class CoffeeApiController {
+    @Autowired
+    private CoffeeService coffeeService;
+
+    // GET
+    // 모든 커피 데이터 조회
+    @GetMapping("/api/coffees")
+    public Iterable<CoffeeEntity> index() {
+        return coffeeService.index();
+    }
+    // 특정 커피 데이터 조회
+    @GetMapping("/api/coffees/{id}")
+    public ResponseEntity<CoffeeEntity> show(@PathVariable Long id) {
+        CoffeeEntity coffeeEntity = coffeeService.show(id);
+        return (coffeeEntity != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(coffeeEntity) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    // POST
+    // 커피 데이터 생성
+    @PostMapping("/api/coffees")
+    public ResponseEntity<CoffeeEntity> create(@RequestBody CoffeeDTO coffeeDTO) {
+        CoffeeEntity created = coffeeService.create(coffeeDTO);
+        return (created != null) ?
+                ResponseEntity.status(HttpStatus.CREATED).body(created) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    // PATCH
+    // 특정 커피 데이터 수정
+    @PatchMapping("/api/coffees/{id}")
+    public ResponseEntity<CoffeeEntity> update(@PathVariable Long id,
+                                         @RequestBody CoffeeDTO coffeeDTO) {
+        CoffeeEntity updated = coffeeService.update(id, coffeeDTO);
+        return (updated != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(updated) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    // DELETE
+    // 특정 커피 데이터 삭제
+    @DeleteMapping("/api/coffees/{id}")
+    public ResponseEntity<CoffeeEntity> delete(@PathVariable Long id) {
+        CoffeeEntity deleted = coffeeService.delete(id);
+        return (deleted != null) ?
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+}
+```
+
+클라이언트의 요청을 받을 RestController를 구현한다. <br>
