@@ -1792,3 +1792,21 @@ application.properties에 H2 DB를 사용하기 위한 설정을 추가한다. <
 ![image](https://github.com/user-attachments/assets/640a2f11-c2c7-487f-b7ec-1aa599a056a3)
 Talend API Tester로 RestController의 Mapping 동작들을 확인한다. <br>
 
+안드로이드 스튜디오에서 Retrofit으로 SpringBoot와 통신을 구현한다. <br>
+## build.gradle.kts
+```Java
+implementation("com.squareup.retrofit2:retrofit:2.9.0")
+implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+```
+build.gradle에서 dependency에 retrofit을 추가하고 Sync 한다. <br>
+
+## AndroidManifest.xml
+```Java
+<uses-permission android:name="android.permission.INTERNET" />
+
+<application
+    ...
+    android:usesCleartextTraffic="true"
+    ... >
+```
+매니페스트에서 설정을 추가한다. <br>
