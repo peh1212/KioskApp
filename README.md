@@ -1529,7 +1529,7 @@ public class MenuActivity extends AppCompatActivity {
 ![image](https://github.com/user-attachments/assets/04758558-afd0-4451-b94b-f86167b307a2) <br>
 https://start.spring.io/ <br>
 start.spring.io에서 프로젝트를 생성한다. <br>
-dependency에는 `Lombok`, `Mustache`, `Spring Web`, `Spring Data JPA`, `PostgreSQL Dirver`를 추가한다. <br>
+dependency에는 `Lombok`, `Mustache`, `Spring Web`, `Spring Data JPA`, `H2 Database`, `PostgreSQL Dirver`를 추가한다. <br>
 `IntelliJ IDEA`에서 프로젝트를 열어서 코드를 작성한다. <br>
 
 ## CoffeeDTO.Java
