@@ -1766,3 +1766,28 @@ public class CoffeeApiController {
 ```
 
 클라이언트의 요청을 받을 RestController를 구현한다. <br>
+
+
+# 2/20(목)
+## import.sql
+```sql
+insert into coffee_entity(coffee_name, coffee_quantity, option_hot, option_size, option_topping, option_ice, total_price) values('Americano', 1, 'Hot', 'Large', 'Hazelnuts', '얼음 많이', 5000);
+insert into coffee_entity(coffee_name, coffee_quantity, option_hot, option_size, option_topping, option_ice, total_price) values('caffelatte', 3, 'Ice', 'Medium', 'Vanilla', '얼음 없이', 6000);
+insert into coffee_entity(coffee_name, coffee_quantity, option_hot, option_size, option_topping, option_ice, total_price) values('espresso', 2, 'Ice', 'Small', 'Hazelnuts', '얼음 많이', 3500);
+```
+src/main/resources에 import.sql 파일을 생성하고, 테스트용 더미데이터를 넣는다. <br>
+
+## application.properties
+```Java
+spring.h2.console.enabled=true
+spring.datasource.url=jdbc:h2:mem:mydb
+```
+application.properties에 H2 DB를 사용하기 위한 설정을 추가한다. <br>
+`spring.h2.console.enabled=true` : H2 DB 콘솔 활성화 <br>
+`spring.datasource.url=jdbc:h2:mem:mydb` : H2 DB URL을 jdbc:h2:mem:mydb로 고정 <br>
+
+![image](https://github.com/user-attachments/assets/d026f6ba-9b35-4596-8332-ff71b1edc640)
+데이터가 추가된 것을 확인할 수 있다. <br>
+
+![image](https://github.com/user-attachments/assets/640a2f11-c2c7-487f-b7ec-1aa599a056a3)
+Talend API Tester로 RestController의 Mapping 동작들을 확인한다. <br>
