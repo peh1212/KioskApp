@@ -1791,3 +1791,4 @@ application.properties에 H2 DB를 사용하기 위한 설정을 추가한다. <
 
 ![image](https://github.com/user-attachments/assets/640a2f11-c2c7-487f-b7ec-1aa599a056a3)
 Talend API Tester로 RestController의 Mapping 동작들을 확인한다. <br>
+
