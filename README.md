@@ -1522,4 +1522,7 @@ public class MenuActivity extends AppCompatActivity {
 (출처 https://mega-mgccoffee.com/)  
 
 <br><br>
+## :sparkles: 최종 완성 !! :sparkles: <br><br>
+![kioskappgif](https://github.com/user-attachments/assets/29df1e1e-5e6d-4198-89ef-78c0831c8dea)
+
 
